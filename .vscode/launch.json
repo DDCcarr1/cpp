@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/workspaces/c-plus-plus/excerises",
-      "program": "/workspaces/c-plus-plus/excerises/build/Debug/outDebug",
+      "cwd": "/workspaces/c-plus-plus",
+      "program": "/workspaces/c-plus-plus/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
