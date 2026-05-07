@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Exam Practice Questions - 150 Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 15px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .options {
+            margin-top: 15px;
+        }
+
+        .option {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .option.selected {
+            background: #e6eeff;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+        }
+
+        .option.incorrect {
+            background: #fed7d7;
+            border-color: #f56565;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .block-title {
+            background: #667eea;
+            color: white;
+            padding: 12px 15px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 1.15em;
+            font-weight: bold;
+        }
+
+        .results-section {
+            background: #f0f7ff;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .result-correct {
+            border-left: 4px solid #48bb78;
+        }
+
+        .result-incorrect {
+            border-left: 4px solid #f56565;
+        }
+
+        .answer-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fffbea;
+            border-radius: 3px;
+            font-size: 0.95em;
+            color: #744210;
+        }
+
+        .score-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .summary {
+            background: #e6eeff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .summary h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .summary p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .stats {
+                gap: 15px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>C++ Exam Practice</h1>
+            <p class="subtitle">Blocks 1-4: Syntax, Flow Control, Vectors, Pointers, Structures & Strings</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Total Questions</div>
+                    <div class="stat-value" id="totalCount">150</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Currently Viewing</div>
+                    <div class="stat-value" id="viewingCount">150</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Your Score</div>
+                    <div class="stat-value" id="scoreDisplay">-</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="submitAnswers()">Submit Answers & Score</button>
+            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
+            <button class="btn-secondary" onclick="showAnswers()">Show Answers</button>
+        </div>
+
+        <div class="filter-section" id="filterSection">
+            <button class="filter-btn active" onclick="filterByBlock('all')">All Blocks</button>
+            <button class="filter-btn" onclick="filterByBlock('1')">Block 1</button>
+            <button class="filter-btn" onclick="filterByBlock('2')">Block 2</button>
+            <button class="filter-btn" onclick="filterByBlock('3')">Block 3</button>
+            <button class="filter-btn" onclick="filterByBlock('4')">Block 4</button>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>Results</h2>
+            <div class="score-display" id="scoreResult"></div>
+            <div id="resultDetails"></div>
+        </div>
+
+        <div class="controls" style="margin-top: 30px;">
+            <button class="btn-primary" onclick="submitAnswers()">Submit Answers & Score</button>
+            <button class="btn-secondary" onclick="resetAll()">Reset All</button>
+        </div>
+
+        <footer>
+            <p>C++ Certification Exam Practice Questions | Based on Official Exam Outline</p>
+            <p>Test your knowledge of Blocks 1-4: Syntax, Flow Control, Vectors & Pointers, Structures & Strings</p>
+        </footer>
+    </div>
+
+    <script>
+        // Questions Database
+        const questions = [
+            // BLOCK 1: SYNTAX, LITERALS, AND OPERATORS (42 questions)
+            {
+                id: 1,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is a valid C++ keyword?",
+                options: ["function", "class", "define", "script"],
+                correct: 1,
+                explanation: "'class' is a valid C++ keyword used for object-oriented programming. The others are not valid C++ keywords."
+            },
+            {
+                id: 2,
+                block: 1,
+                type: "multiple",
+                question: "What is the correct syntax for the main() function?",
+                options: [
+                    "void main() { }",
+                    "int main() { return 0; }",
+                    "main() { }",
+                    "function main() { }"
+                ],
+                correct: 1,
+                explanation: "The standard main() function returns int and should be 'int main() { return 0; }' in C++."
+            },
+            {
+                id: 3,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is NOT a built-in C++ data type?",
+                options: ["int", "float", "string", "double"],
+                correct: 2,
+                explanation: "'string' is from the std namespace and not a primitive built-in type. int, float, and double are built-in types."
+            },
+            {
+                id: 4,
+                block: 1,
+                type: "multiple",
+                question: "What is the correct way to declare a floating-point literal?",
+                options: ["3.14", "3.14f", "3.14d", "Both 3.14 and 3.14f are correct"],
+                correct: 3,
+                explanation: "Both '3.14' (double) and '3.14f' (float) are valid floating-point literals."
+            },
+            {
+                id: 5,
+                block: 1,
+                type: "multiple",
+                question: "What does the modulo operator (%) do?",
+                options: [
+                    "Multiplies two numbers",
+                    "Returns the remainder of division",
+                    "Divides two numbers",
+                    "Raises a number to a power"
+                ],
+                correct: 1,
+                explanation: "The modulo operator (%) returns the remainder when the first number is divided by the second."
+            },
+            {
+                id: 6,
+                block: 1,
+                type: "multiple",
+                question: "What is the result of: 10 + 5 * 2?",
+                options: ["20", "30", "15", "25"],
+                correct: 0,
+                explanation: "Due to operator precedence, multiplication is performed before addition. 5 * 2 = 10, then 10 + 10 = 20."
+            },
+            {
+                id: 7,
+                block: 1,
+                type: "multiple",
+                question: "Which operator has the highest precedence?",
+                options: ["+", "*", "++", "="],
+                correct: 2,
+                explanation: "The increment operator (++) has higher precedence than arithmetic operators. Generally, postfix/prefix operators have highest precedence."
+            },
+            {
+                id: 8,
+                block: 1,
+                type: "multiple",
+                question: "What will this expression evaluate to? true && false || true",
+                options: ["true", "false", "undefined", "error"],
+                correct: 0,
+                explanation: "Following precedence: (true && false) || true = false || true = true. AND has higher precedence than OR."
+            },
+            {
+                id: 9,
+                block: 1,
+                type: "multiple",
+                question: "What is short-circuit logic?",
+                options: [
+                    "An error in your program",
+                    "When logical operators stop evaluating once the result is determined",
+                    "A type of loop",
+                    "A memory management technique"
+                ],
+                correct: 1,
+                explanation: "Short-circuit logic means && and || operators don't evaluate all operands if the result is already determined."
+            },
+            {
+                id: 10,
+                block: 1,
+                type: "multiple",
+                question: "In the expression 'x > 5 && y < 10', if x <= 5, what happens?",
+                options: [
+                    "y < 10 is always evaluated",
+                    "y < 10 is NOT evaluated (short-circuit)",
+                    "An error occurs",
+                    "Both are always evaluated"
+                ],
+                correct: 1,
+                explanation: "With short-circuit logic, if the first part of && is false, the second part is not evaluated."
+            },
+            {
+                id: 11,
+                block: 1,
+                type: "multiple",
+                question: "What does cout do?",
+                options: [
+                    "Reads input from the user",
+                    "Outputs data to the console",
+                    "Logs errors",
+                    "Clears the output"
+                ],
+                correct: 1,
+                explanation: "cout is used to output data to the console (standard output)."
+            },
+            {
+                id: 12,
+                block: 1,
+                type: "multiple",
+                question: "What does cin do?",
+                options: [
+                    "Outputs data",
+                    "Reads input from the user",
+                    "Creates a variable",
+                    "Declares a constant"
+                ],
+                correct: 1,
+                explanation: "cin is used to read input from the user (standard input)."
+            },
+            {
+                id: 13,
+                block: 1,
+                type: "multiple",
+                question: "What is the purpose of endl?",
+                options: [
+                    "Ends the program",
+                    "Outputs a newline and flushes the buffer",
+                    "Declares the end of a function",
+                    "Ends a loop"
+                ],
+                correct: 1,
+                explanation: "endl outputs a newline character and flushes the output buffer."
+            },
+            {
+                id: 14,
+                block: 1,
+                type: "multiple",
+                question: "What does setw() do?",
+                options: [
+                    "Sets the width of output field",
+                    "Sets a variable value",
+                    "Compares two values",
+                    "Declares a variable width"
+                ],
+                correct: 0,
+                explanation: "setw() is an output manipulator that sets the width of the next output field."
+            },
+            {
+                id: 15,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is a valid assignment operator?",
+                options: ["==", "=", "!=", "=>"],
+                correct: 1,
+                explanation: "'=' is the assignment operator. '==' is comparison, '!=' is not-equal."
+            },
+            {
+                id: 16,
+                block: 1,
+                type: "multiple",
+                question: "What is the difference between = and ==?",
+                options: [
+                    "No difference",
+                    "= assigns a value, == compares two values",
+                    "== assigns, = compares",
+                    "Both are used for comparison"
+                ],
+                correct: 1,
+                explanation: "'=' is assignment, '==' is equality comparison."
+            },
+            {
+                id: 17,
+                block: 1,
+                type: "multiple",
+                question: "What does the bitwise AND operator (&) do?",
+                options: [
+                    "Performs logical AND",
+                    "Gets the address of a variable",
+                    "Performs bit-by-bit AND on integers",
+                    "Creates a reference"
+                ],
+                correct: 2,
+                explanation: "The bitwise AND operator (&) performs bit-by-bit AND operations on integer values."
+            },
+            {
+                id: 18,
+                block: 1,
+                type: "multiple",
+                question: "What is 5 & 3 in binary?",
+                options: ["1", "7", "0", "4"],
+                correct: 0,
+                explanation: "5 is 101 in binary, 3 is 011 in binary. 101 & 011 = 001 = 1."
+            },
+            {
+                id: 19,
+                block: 1,
+                type: "multiple",
+                question: "What does the bitwise OR operator (|) do?",
+                options: [
+                    "Performs logical OR",
+                    "Outputs data",
+                    "Performs bit-by-bit OR on integers",
+                    "Creates a pipe"
+                ],
+                correct: 2,
+                explanation: "The bitwise OR operator (|) performs bit-by-bit OR operations on integer values."
+            },
+            {
+                id: 20,
+                block: 1,
+                type: "multiple",
+                question: "What is the ternary operator?",
+                options: [
+                    "condition ? value1 : value2",
+                    "condition && value1 || value2",
+                    "condition | value1 & value2",
+                    "condition ? value1 ? value2"
+                ],
+                correct: 0,
+                explanation: "The ternary operator is 'condition ? value_if_true : value_if_false'."
+            },
+            {
+                id: 21,
+                block: 1,
+                type: "multiple",
+                question: "What does this expression return? (10 > 5) ? 100 : 50",
+                options: ["100", "50", "error", "true"],
+                correct: 0,
+                explanation: "Since 10 > 5 is true, the ternary operator returns 100."
+            },
+            {
+                id: 22,
+                block: 1,
+                type: "multiple",
+                question: "What is the correct syntax for a single-line comment?",
+                options: ["/* comment */", "// comment", "# comment", "-- comment"],
+                correct: 1,
+                explanation: "'//' is used for single-line comments in C++."
+            },
+            {
+                id: 23,
+                block: 1,
+                type: "multiple",
+                question: "What is the correct syntax for a multi-line comment?",
+                options: ["// comment //", "# comment #", "/* comment */", "-- comment --"],
+                correct: 2,
+                explanation: "'/* */' is used for multi-line comments in C++."
+            },
+            {
+                id: 24,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is NOT a valid C++ keyword?",
+                options: ["int", "float", "array", "void"],
+                correct: 2,
+                explanation: "'array' is not a C++ keyword. The others are valid keywords."
+            },
+            {
+                id: 25,
+                block: 1,
+                type: "multiple",
+                question: "What does the increment operator (++) do?",
+                options: [
+                    "Adds 1 to a variable",
+                    "Adds 2 to a variable",
+                    "Multiplies by 2",
+                    "Decreases by 1"
+                ],
+                correct: 0,
+                explanation: "The ++ operator increments (adds 1 to) a variable."
+            },
+            {
+                id: 26,
+                block: 1,
+                type: "multiple",
+                question: "What is the difference between ++x and x++?",
+                options: [
+                    "No difference",
+                    "++x (prefix) increments and returns the new value; x++ (postfix) increments and returns the old value",
+                    "++x is faster",
+                    "x++ is more common"
+                ],
+                correct: 1,
+                explanation: "++x (prefix) increments before returning; x++ (postfix) increments after returning the original value."
+            },
+            {
+                id: 27,
+                block: 1,
+                type: "multiple",
+                question: "What is the associativity of the assignment operator (=)?",
+                options: ["Left-to-right", "Right-to-left", "No associativity", "Depends on context"],
+                correct: 1,
+                explanation: "The assignment operator is right-associative, so 'a = b = c' evaluates as 'a = (b = c)'."
+            },
+            {
+                id: 28,
+                block: 1,
+                type: "multiple",
+                question: "What is a literal in C++?",
+                options: [
+                    "A variable declaration",
+                    "A fixed value written directly in code",
+                    "A function call",
+                    "A loop statement"
+                ],
+                correct: 1,
+                explanation: "A literal is a fixed value written directly in the code (e.g., 42, 3.14, 'a', \"hello\")."
+            },
+            {
+                id: 29,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is a string literal?",
+                options: ["'hello'", "\"hello\"", "hello", "string hello"],
+                correct: 1,
+                explanation: "String literals in C++ are enclosed in double quotes: \"hello\". Single quotes are for char literals."
+            },
+            {
+                id: 30,
+                block: 1,
+                type: "multiple",
+                question: "Which of the following is a character literal?",
+                options: ["\"a\"", "'a'", "a", "char a"],
+                correct: 1,
+                explanation: "Character literals in C++ are enclosed in single quotes: 'a'."
+            },
+            {
+                id: 31,
+                block: 1,
+                type: "multiple",
+                question: "What is the result of: 15 / 3 + 2 * 4?",
+                options: ["23", "18", "13", "44"],
+                correct: 2,
+                explanation: "Following precedence: (15 / 3) + (2 * 4) = 5 + 8 = 13."
+            },
+            {
+                id: 32,
+                block: 1,
+                type: "multiple",
+                question: "What is the result of: 2 + 3 * 4 - 1?",
+                options: ["19", "13", "23", "20"],
+                correct: 1,
+                explanation: "Following precedence: 2 + (3 * 4) - 1 = 2 + 12 - 1 = 13."
+            },
+            {
+                id: 33,
+                block: 1,
+                type: "multiple",
+                question: "What does the logical NOT operator (!) do?",
+                options: [
+                    "Negates a boolean value",
+                    "Outputs data",
+                    "Declares a variable",
+                    "Creates a comment"
+                ],
+                correct: 0,
+                explanation: "The NOT operator (!) inverts a boolean: !true = false, !false = true."
+            },
+            {
+                id: 34,
+                block: 1,
+                type: "multiple",
+                question: "What is !true?",
+                options: ["true", "false", "0", "error"],
+                correct: 1,
+                explanation: "!true evaluates to false."
+            },
+            {
+                id: 35,
+                block: 1,
+                type: "multiple",
+                question: "What is the correct way to declare multiple variables of the same type?",
+                options: [
+                    "int a, b, c;",
+                    "int a; int b; int c;",
+                    "int a = b = c;",
+                    "Both a and b are correct"
+                ],
+                correct: 3,
+                explanation: "Both 'int a, b, c;' and declaring them separately are valid."
+            },
+            {
+                id: 36,
+                block: 1,
+                type: "multiple",
+                question: "What is the difference between int and float?",
+                options: [
+                    "int stores integers, float stores decimal numbers",
+                    "float is faster",
+                    "int can store larger numbers",
+                    "No difference"
+                ],
+                correct: 0,
+                explanation: "int stores whole numbers, float stores floating-point (decimal) numbers."
+            },
+            {
+                id: 37,
+                block: 1,
+                type: "multiple",
+                question: "What does the comma operator (,) do?",
+                options: [
+                    "Declares multiple variables",
+                    "Separates function arguments and evaluates left to right",
+                    "Creates a list",
+                    "Performs concatenation"
+                ],
+                correct: 1,
+                explanation: "The comma operator separates elements and evaluates expressions from left to right."
+            },
+            {
+                id: 38,
+                block: 1,
+                type: "multiple",
+                question: "What is the range of a signed char in most systems?",
+                options: [
+                    "-128 to 127",
+                    "0 to 255",
+                    "-256 to 255",
+                    "0 to 127"
+                ],
+                correct: 0,
+                explanation: "A signed char typically ranges from -128 to 127 (8-bit signed integer)."
+            },
+            {
+                id: 39,
+                block: 1,
+                type: "multiple",
+                question: "What is the difference between signed and unsigned integers?",
+                options: [
+                    "signed can be negative, unsigned cannot",
+                    "unsigned is faster",
+                    "signed is always smaller",
+                    "No difference"
+                ],
+                correct: 0,
+                explanation: "signed integers can represent negative values; unsigned integers cannot but can represent larger positive values."
+            },
+            {
+                id: 40,
+                block: 1,
+                type: "multiple",
+                question: "What is a constant in C++?",
+                options: [
+                    "A variable that can change",
+                    "A value that cannot be changed after initialization",
+                    "A function parameter",
+                    "A loop variable"
+                ],
+                correct: 1,
+                explanation: "A constant is a value that is set once and cannot be modified."
+            },
+            {
+                id: 41,
+                block: 1,
+                type: "multiple",
+                question: "How do you declare a constant in C++?",
+                options: [
+                    "constant int x = 5;",
+                    "const int x = 5;",
+                    "int const x = 5;",
+                    "Both b and c are correct"
+                ],
+                correct: 3,
+                explanation: "Both 'const int x = 5;' and 'int const x = 5;' declare constants."
+            },
+            {
+                id: 42,
+                block: 1,
+                type: "multiple",
+                question: "What is the purpose of the #include directive?",
+                options: [
+                    "Declares a function",
+                    "Includes a header file",
+                    "Declares a variable",
+                    "Creates a comment"
+                ],
+                correct: 1,
+                explanation: "#include includes header files that contain declarations and definitions needed by the program."
+            },
+
+            // BLOCK 2: FLOW CONTROL AND FUNCTIONS (42 questions)
+            {
+                id: 43,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax for an if statement?",
+                options: [
+                    "if (condition) { }",
+                    "if condition { }",
+                    "if: condition { }",
+                    "if (condition) :"
+                ],
+                correct: 0,
+                explanation: "The correct syntax is 'if (condition) { }' with the condition in parentheses."
+            },
+            {
+                id: 44,
+                block: 2,
+                type: "multiple",
+                question: "What does an else statement do?",
+                options: [
+                    "Executes if the if condition is true",
+                    "Executes if the if condition is false",
+                    "Creates a loop",
+                    "Declares a variable"
+                ],
+                correct: 1,
+                explanation: "The else statement executes when the if condition is false."
+            },
+            {
+                id: 45,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax for an else-if statement?",
+                options: [
+                    "else if (condition) { }",
+                    "elseif (condition) { }",
+                    "else-if (condition) { }",
+                    "elif (condition) { }"
+                ],
+                correct: 0,
+                explanation: "The correct syntax is 'else if (condition) { }' with a space between else and if."
+            },
+            {
+                id: 46,
+                block: 2,
+                type: "multiple",
+                question: "What does a while loop do?",
+                options: [
+                    "Repeats code a fixed number of times",
+                    "Repeats code while a condition is true",
+                    "Repeats code once",
+                    "Skips code"
+                ],
+                correct: 1,
+                explanation: "A while loop repeats the block of code while the condition is true."
+            },
+            {
+                id: 47,
+                block: 2,
+                type: "multiple",
+                question: "What does a do-while loop do?",
+                options: [
+                    "Same as while loop",
+                    "Executes the block at least once, then repeats while condition is true",
+                    "Executes only if condition is true",
+                    "Never executes"
+                ],
+                correct: 1,
+                explanation: "A do-while loop executes the block first, then checks the condition and repeats if true."
+            },
+            {
+                id: 48,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax for a for loop?",
+                options: [
+                    "for (init; condition; update) { }",
+                    "for init; condition; update { }",
+                    "for (init, condition, update) { }",
+                    "for init condition update { }"
+                ],
+                correct: 0,
+                explanation: "The correct syntax is 'for (init; condition; update) { }'."
+            },
+            {
+                id: 49,
+                block: 2,
+                type: "multiple",
+                question: "What does the break statement do?",
+                options: [
+                    "Exits the loop or switch",
+                    "Skips the current iteration",
+                    "Ends the program",
+                    "Pauses execution"
+                ],
+                correct: 0,
+                explanation: "The break statement exits (terminates) the current loop or switch statement."
+            },
+            {
+                id: 50,
+                block: 2,
+                type: "multiple",
+                question: "What does the continue statement do?",
+                options: [
+                    "Exits the loop",
+                    "Skips the rest of the current iteration and continues to the next",
+                    "Ends the program",
+                    "Pauses execution"
+                ],
+                correct: 1,
+                explanation: "The continue statement skips the remaining code in the current iteration and continues to the next iteration."
+            },
+            {
+                id: 51,
+                block: 2,
+                type: "multiple",
+                question: "What is the purpose of the goto statement?",
+                options: [
+                    "Creates a loop",
+                    "Transfers control to a labeled statement",
+                    "Declares a variable",
+                    "Outputs data"
+                ],
+                correct: 1,
+                explanation: "The goto statement jumps to a labeled location in the code."
+            },
+            {
+                id: 52,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax for a switch statement?",
+                options: [
+                    "switch value { }",
+                    "switch (value) { }",
+                    "switch: value { }",
+                    "switch value: { }"
+                ],
+                correct: 1,
+                explanation: "The correct syntax is 'switch (value) { }'."
+            },
+            {
+                id: 53,
+                block: 2,
+                type: "multiple",
+                question: "What does the default keyword do in a switch statement?",
+                options: [
+                    "Defines the first case",
+                    "Executes if no case matches",
+                    "Ends the switch",
+                    "Creates an error"
+                ],
+                correct: 1,
+                explanation: "The default case executes if none of the case values match the switch expression."
+            },
+            {
+                id: 54,
+                block: 2,
+                type: "multiple",
+                question: "What happens if you forget 'break;' in a switch case?",
+                options: [
+                    "It works the same",
+                    "Code falls through to the next case",
+                    "It creates an error",
+                    "The program ends"
+                ],
+                correct: 1,
+                explanation: "Without break, execution falls through to the next case (unless it's the last case)."
+            },
+            {
+                id: 55,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax to define a function?",
+                options: [
+                    "return_type function_name() { }",
+                    "function return_type name() { }",
+                    "define function_name() { }",
+                    "function name { }"
+                ],
+                correct: 0,
+                explanation: "The correct syntax is 'return_type function_name() { }'."
+            },
+            {
+                id: 56,
+                block: 2,
+                type: "multiple",
+                question: "What does a function with return type 'void' do?",
+                options: [
+                    "Returns an integer",
+                    "Returns a string",
+                    "Does not return a value",
+                    "Returns nothing and causes an error"
+                ],
+                correct: 2,
+                explanation: "A void function does not return any value."
+            },
+            {
+                id: 57,
+                block: 2,
+                type: "multiple",
+                question: "What is the return statement used for?",
+                options: [
+                    "Declares a variable",
+                    "Ends a function and optionally returns a value",
+                    "Creates a loop",
+                    "Outputs data"
+                ],
+                correct: 1,
+                explanation: "The return statement terminates the function and can return a value to the caller."
+            },
+            {
+                id: 58,
+                block: 2,
+                type: "multiple",
+                question: "What does 'pass by value' mean?",
+                options: [
+                    "The function modifies the original variable",
+                    "A copy of the value is passed to the function",
+                    "A reference to the variable is passed",
+                    "No argument is passed"
+                ],
+                correct: 1,
+                explanation: "Pass by value sends a copy of the value to the function; changes don't affect the original."
+            },
+            {
+                id: 59,
+                block: 2,
+                type: "multiple",
+                question: "What does 'pass by reference' mean?",
+                options: [
+                    "A copy is passed",
+                    "A reference to the original variable is passed, allowing modifications",
+                    "No argument is passed",
+                    "A pointer is created"
+                ],
+                correct: 1,
+                explanation: "Pass by reference passes a reference to the original variable; changes affect the original."
+            },
+            {
+                id: 60,
+                block: 2,
+                type: "multiple",
+                question: "How do you pass a parameter by reference?",
+                options: [
+                    "void func(int x) { }",
+                    "void func(int *x) { }",
+                    "void func(int &x) { }",
+                    "void func(&int x) { }"
+                ],
+                correct: 2,
+                explanation: "Use the & symbol: 'void func(int &x) { }' declares a reference parameter."
+            },
+            {
+                id: 61,
+                block: 2,
+                type: "multiple",
+                question: "What does 'pass by pointer' mean?",
+                options: [
+                    "A copy is passed",
+                    "A reference is passed",
+                    "A pointer to the variable is passed",
+                    "The variable is copied to a pointer"
+                ],
+                correct: 2,
+                explanation: "Pass by pointer passes a pointer to the variable, allowing modifications through dereferencing."
+            },
+            {
+                id: 62,
+                block: 2,
+                type: "multiple",
+                question: "How do you pass a parameter by pointer?",
+                options: [
+                    "void func(int x) { }",
+                    "void func(int *x) { }",
+                    "void func(int &x) { }",
+                    "void func(*int x) { }"
+                ],
+                correct: 1,
+                explanation: "Use the * symbol: 'void func(int *x) { }' declares a pointer parameter."
+            },
+            {
+                id: 63,
+                block: 2,
+                type: "multiple",
+                question: "What is recursion?",
+                options: [
+                    "A loop that repeats",
+                    "A function that calls itself",
+                    "A type of pointer",
+                    "A variable declaration"
+                ],
+                correct: 1,
+                explanation: "Recursion is when a function calls itself to solve a problem."
+            },
+            {
+                id: 64,
+                block: 2,
+                type: "multiple",
+                question: "What is the base case in recursion?",
+                options: [
+                    "The first function call",
+                    "The condition that stops the recursion",
+                    "The return value",
+                    "The first parameter"
+                ],
+                correct: 1,
+                explanation: "The base case is the condition that terminates the recursion to prevent infinite loops."
+            },
+            {
+                id: 65,
+                block: 2,
+                type: "multiple",
+                question: "What happens if a recursive function has no base case?",
+                options: [
+                    "It works normally",
+                    "It causes infinite recursion and stack overflow",
+                    "It returns 0",
+                    "It skips execution"
+                ],
+                correct: 1,
+                explanation: "Without a base case, recursion never stops, causing stack overflow."
+            },
+            {
+                id: 66,
+                block: 2,
+                type: "multiple",
+                question: "What is the factorial of 5?",
+                options: ["5", "15", "120", "100"],
+                correct: 2,
+                explanation: "5! = 5 × 4 × 3 × 2 × 1 = 120."
+            },
+            {
+                id: 67,
+                block: 2,
+                type: "multiple",
+                question: "What does function overloading allow?",
+                options: [
+                    "Functions with the same name but different parameters",
+                    "Creating multiple files",
+                    "Storing multiple values",
+                    "Looping multiple times"
+                ],
+                correct: 0,
+                explanation: "Function overloading allows multiple functions with the same name but different parameter lists."
+            },
+            {
+                id: 68,
+                block: 2,
+                type: "multiple",
+                question: "What is function scope?",
+                options: [
+                    "The range of values a function can return",
+                    "Where a variable declared in a function is accessible",
+                    "The size of a function",
+                    "The number of parameters a function has"
+                ],
+                correct: 1,
+                explanation: "Function scope refers to where variables declared inside a function are accessible."
+            },
+            {
+                id: 69,
+                block: 2,
+                type: "multiple",
+                question: "What is global scope?",
+                options: [
+                    "Variables accessible only in one function",
+                    "Variables accessible throughout the entire program",
+                    "Variables in a structure",
+                    "Variables in a loop"
+                ],
+                correct: 1,
+                explanation: "Global scope means a variable is accessible from any function in the program."
+            },
+            {
+                id: 70,
+                block: 2,
+                type: "multiple",
+                question: "What is local scope?",
+                options: [
+                    "Variables accessible throughout the program",
+                    "Variables accessible only within a specific block (function or loop)",
+                    "Variables in a structure",
+                    "Variables in a class"
+                ],
+                correct: 1,
+                explanation: "Local scope means a variable is only accessible within the block where it's declared."
+            },
+            {
+                id: 71,
+                block: 2,
+                type: "multiple",
+                question: "Can a local variable have the same name as a global variable?",
+                options: [
+                    "No, it will cause an error",
+                    "Yes, the local variable will shadow the global variable",
+                    "Yes, but they will be the same variable",
+                    "No, it's not allowed in C++"
+                ],
+                correct: 1,
+                explanation: "A local variable can shadow (hide) a global variable with the same name."
+            },
+            {
+                id: 72,
+                block: 2,
+                type: "multiple",
+                question: "What is a function declaration (prototype)?",
+                options: [
+                    "Defining what a function does",
+                    "Telling the compiler about a function before it's defined",
+                    "Calling a function",
+                    "Creating a variable"
+                ],
+                correct: 1,
+                explanation: "A function prototype declares the function signature before the full definition."
+            },
+            {
+                id: 73,
+                block: 2,
+                type: "multiple",
+                question: "What is the correct syntax for a function prototype?",
+                options: [
+                    "return_type function_name(parameters) { }",
+                    "return_type function_name(parameters);",
+                    "function_name(parameters);",
+                    "function return_type(parameters);"
+                ],
+                correct: 1,
+                explanation: "A function prototype ends with a semicolon: 'return_type function_name(parameters);'"
+            },
+            {
+                id: 74,
+                block: 2,
+                type: "multiple",
+                question: "What is the main() function's purpose?",
+                options: [
+                    "It's optional",
+                    "It's the entry point of the program",
+                    "It must come after all other functions",
+                    "It returns a float"
+                ],
+                correct: 1,
+                explanation: "main() is the starting point where program execution begins."
+            },
+            {
+                id: 75,
+                block: 2,
+                type: "multiple",
+                question: "How do you call a function in C++?",
+                options: [
+                    "function_name;",
+                    "function_name();",
+                    "call function_name();",
+                    "function_name();"
+                ],
+                correct: 3,
+                explanation: "Functions are called with parentheses: 'function_name();' with arguments inside if needed."
+            },
+            {
+                id: 76,
+                block: 2,
+                type: "multiple",
+                question: "What does this loop output? for(int i = 0; i < 3; i++) cout << i;",
+                options: ["012", "123", "0", "error"],
+                correct: 0,
+                explanation: "The loop runs when i = 0, 1, 2 (i < 3), outputting '012'."
+            },
+            {
+                id: 77,
+                block: 2,
+                type: "multiple",
+                question: "What does this code output? for(int i = 1; i <= 3; i++) cout << i;",
+                options: ["012", "123", "12", "error"],
+                correct: 1,
+                explanation: "The loop runs when i = 1, 2, 3 (i <= 3), outputting '123'."
+            },
+            {
+                id: 78,
+                block: 2,
+                type: "multiple",
+                question: "What does a ternary operator inside a for loop do?",
+                options: [
+                    "Creates three loops",
+                    "Provides a conditional expression in the loop",
+                    "Skips the loop",
+                    "Nothing special"
+                ],
+                correct: 1,
+                explanation: "A ternary operator works like any conditional expression, often used for conditions or updates."
+            },
+            {
+                id: 79,
+                block: 2,
+                type: "multiple",
+                question: "What does this code do? while(true) cout << \"x\";",
+                options: [
+                    "Outputs 'x' once",
+                    "Outputs 'x' 10 times",
+                    "Outputs 'x' infinitely (infinite loop)",
+                    "Outputs nothing"
+                ],
+                correct: 2,
+                explanation: "A while(true) loop runs infinitely unless broken by a break statement."
+            },
+            {
+                id: 80,
+                block: 2,
+                type: "multiple",
+                question: "In a do-while loop, the condition is checked:",
+                options: [
+                    "Before each iteration",
+                    "After each iteration",
+                    "Never",
+                    "At the beginning"
+                ],
+                correct: 1,
+                explanation: "In do-while, the condition is checked after each iteration, so the block executes at least once."
+            },
+            {
+                id: 81,
+                block: 2,
+                type: "multiple",
+                question: "What is the purpose of a labeled statement with goto?",
+                options: [
+                    "To mark a location in code",
+                    "To create a loop",
+                    "To declare a variable",
+                    "To output data"
+                ],
+                correct: 0,
+                explanation: "Labels mark locations in code that can be jumped to with goto."
+            },
+            {
+                id: 82,
+                block: 2,
+                type: "multiple",
+                question: "How many parameters can a C++ function have?",
+                options: ["Only 1", "Only 2", "Any number", "A maximum of 10"],
+                correct: 2,
+                explanation: "A function can have zero, one, or multiple parameters."
+            },
+            {
+                id: 83,
+                block: 2,
+                type: "multiple",
+                question: "What is function overloading based on?",
+                options: [
+                    "Different return types",
+                    "Different function names",
+                    "Different parameter types/count",
+                    "Different file locations"
+                ],
+                correct: 2,
+                explanation: "Function overloading is based on having different parameter lists (types or number of parameters)."
+            },
+            {
+                id: 84,
+                block: 2,
+                type: "multiple",
+                question: "What is the difference between a function definition and a declaration?",
+                options: [
+                    "No difference",
+                    "Declaration only provides the signature; definition provides the full implementation",
+                    "Definition uses return types",
+                    "Declaration uses braces"
+                ],
+                correct: 1,
+                explanation: "A declaration (prototype) tells the compiler about the function; a definition implements it."
+            },
+
+            // BLOCK 3: VECTORS AND POINTERS (35 questions)
+            {
+                id: 85,
+                block: 3,
+                type: "multiple",
+                question: "How do you declare a vector in C++?",
+                options: [
+                    "vector<int> v;",
+                    "vector v;",
+                    "int[] v;",
+                    "vector int v;"
+                ],
+                correct: 0,
+                explanation: "Vectors are declared as 'vector<type> name;', e.g., 'vector<int> v;'"
+            },
+            {
+                id: 86,
+                block: 3,
+                type: "multiple",
+                question: "How do you initialize a vector with values?",
+                options: [
+                    "vector<int> v = {1, 2, 3};",
+                    "vector<int> v(1, 2, 3);",
+                    "vector<int> v[1, 2, 3];",
+                    "vector v = [1, 2, 3];"
+                ],
+                correct: 0,
+                explanation: "Vectors are initialized with braces: 'vector<int> v = {1, 2, 3};'"
+            },
+            {
+                id: 87,
+                block: 3,
+                type: "multiple",
+                question: "How do you add an element to a vector?",
+                options: [
+                    "v.add(5);",
+                    "v.push_back(5);",
+                    "v.append(5);",
+                    "v[0] = 5;"
+                ],
+                correct: 1,
+                explanation: "Use push_back() to add elements: 'v.push_back(5);'"
+            },
+            {
+                id: 88,
+                block: 3,
+                type: "multiple",
+                question: "How do you access the first element of a vector?",
+                options: [
+                    "v[0]",
+                    "v.first()",
+                    "v.at(1)",
+                    "v.begin()"
+                ],
+                correct: 0,
+                explanation: "Access vector elements using index notation: v[0] for the first element."
+            },
+            {
+                id: 89,
+                block: 3,
+                type: "multiple",
+                question: "What does the size() method return?",
+                options: [
+                    "The maximum capacity of the vector",
+                    "The number of elements in the vector",
+                    "The memory used by the vector",
+                    "Always 0"
+                ],
+                correct: 1,
+                explanation: "size() returns the current number of elements in the vector."
+            },
+            {
+                id: 90,
+                block: 3,
+                type: "multiple",
+                question: "What does the data() method return?",
+                options: [
+                    "A copy of all elements",
+                    "A pointer to the underlying array",
+                    "The first element",
+                    "The size of the vector"
+                ],
+                correct: 1,
+                explanation: "data() returns a pointer to the first element of the underlying array."
+            },
+            {
+                id: 91,
+                block: 3,
+                type: "multiple",
+                question: "How do you declare a two-dimensional array?",
+                options: [
+                    "int arr[3][4];",
+                    "int arr[3, 4];",
+                    "int arr(3, 4);",
+                    "int 2D[3][4];"
+                ],
+                correct: 0,
+                explanation: "2D arrays are declared as 'int arr[rows][cols];', e.g., 'int arr[3][4];'"
+            },
+            {
+                id: 92,
+                block: 3,
+                type: "multiple",
+                question: "How do you access an element in a 2D array?",
+                options: [
+                    "arr[i, j]",
+                    "arr[i][j]",
+                    "arr(i, j)",
+                    "arr.get(i, j)"
+                ],
+                correct: 1,
+                explanation: "2D array elements are accessed as 'arr[row][col]' or 'arr[i][j]'."
+            },
+            {
+                id: 93,
+                block: 3,
+                type: "multiple",
+                question: "What is a pointer?",
+                options: [
+                    "A variable that stores a memory address",
+                    "A variable that stores an integer",
+                    "A type of loop",
+                    "A data structure"
+                ],
+                correct: 0,
+                explanation: "A pointer is a variable that holds the memory address of another variable."
+            },
+            {
+                id: 94,
+                block: 3,
+                type: "multiple",
+                question: "How do you declare a pointer?",
+                options: [
+                    "int* ptr;",
+                    "int ptr;",
+                    "*int ptr;",
+                    "pointer int ptr;"
+                ],
+                correct: 0,
+                explanation: "Pointers are declared with the * symbol: 'int* ptr;' or 'int *ptr;'"
+            },
+            {
+                id: 95,
+                block: 3,
+                type: "multiple",
+                question: "What does the & operator do?",
+                options: [
+                    "Dereferences a pointer",
+                    "Gets the address of a variable",
+                    "Performs bitwise AND",
+                    "Creates a reference"
+                ],
+                correct: 1,
+                explanation: "The & operator (address-of) returns the memory address of a variable."
+            },
+            {
+                id: 96,
+                block: 3,
+                type: "multiple",
+                question: "What does the * operator do when used with a pointer?",
+                options: [
+                    "Multiplies",
+                    "Dereferences a pointer to access the value",
+                    "Declares a pointer",
+                    "Gets the address"
+                ],
+                correct: 1,
+                explanation: "The * operator (dereference) accesses the value that a pointer points to."
+            },
+            {
+                id: 97,
+                block: 3,
+                type: "multiple",
+                question: "What is nullptr in C++?",
+                options: [
+                    "A pointer with value 0",
+                    "A null pointer constant representing a pointer that points to nothing",
+                    "An error",
+                    "A type of variable"
+                ],
+                correct: 1,
+                explanation: "nullptr is the modern C++ null pointer constant, representing no valid address."
+            },
+            {
+                id: 98,
+                block: 3,
+                type: "multiple",
+                question: "How do you initialize a pointer to nullptr?",
+                options: [
+                    "int* ptr = 0;",
+                    "int* ptr = NULL;",
+                    "int* ptr = nullptr;",
+                    "All of the above are acceptable"
+                ],
+                correct: 3,
+                explanation: "All three methods work, but nullptr is the modern C++ way."
+            },
+            {
+                id: 99,
+                block: 3,
+                type: "multiple",
+                question: "What is static_cast used for?",
+                options: [
+                    "Runtime type checking",
+                    "Compile-time type conversion for related types",
+                    "Allocating memory",
+                    "Creating references"
+                ],
+                correct: 1,
+                explanation: "static_cast performs compile-time conversions between related types."
+            },
+            {
+                id: 100,
+                block: 3,
+                type: "multiple",
+                question: "What is dynamic_cast used for?",
+                options: [
+                    "Converting pointers in inheritance hierarchies with runtime checking",
+                    "Arithmetic conversions",
+                    "Creating pointers",
+                    "Allocating memory"
+                ],
+                correct: 0,
+                explanation: "dynamic_cast converts pointers/references in class hierarchies with runtime type checking."
+            },
+            {
+                id: 101,
+                block: 3,
+                type: "multiple",
+                question: "What does new do?",
+                options: [
+                    "Declares a variable",
+                    "Allocates memory on the heap",
+                    "Creates a pointer",
+                    "Frees memory"
+                ],
+                correct: 1,
+                explanation: "The new operator allocates memory dynamically on the heap."
+            },
+            {
+                id: 102,
+                block: 3,
+                type: "multiple",
+                question: "How do you allocate an integer on the heap?",
+                options: [
+                    "int* ptr = new int;",
+                    "int* ptr = int;",
+                    "int ptr = new;",
+                    "new int ptr;"
+                ],
+                correct: 0,
+                explanation: "Use 'int* ptr = new int;' to allocate an integer on the heap."
+            },
+            {
+                id: 103,
+                block: 3,
+                type: "multiple",
+                question: "What does delete do?",
+                options: [
+                    "Removes a variable",
+                    "Deallocates memory allocated with new",
+                    "Creates a pointer",
+                    "Frees the stack"
+                ],
+                correct: 1,
+                explanation: "The delete operator deallocates memory previously allocated with new."
+            },
+            {
+                id: 104,
+                block: 3,
+                type: "multiple",
+                question: "How do you deallocate a single integer?",
+                options: [
+                    "delete ptr;",
+                    "delete[] ptr;",
+                    "free(ptr);",
+                    "ptr = nullptr;"
+                ],
+                correct: 0,
+                explanation: "Use 'delete ptr;' for single objects allocated with 'new'."
+            },
+            {
+                id: 105,
+                block: 3,
+                type: "multiple",
+                question: "What does delete[] do?",
+                options: [
+                    "Deletes a single object",
+                    "Deallocates an array allocated with new[]",
+                    "Deletes all objects",
+                    "Clears memory"
+                ],
+                correct: 1,
+                explanation: "delete[] deallocates arrays allocated with new[]."
+            },
+            {
+                id: 106,
+                block: 3,
+                type: "multiple",
+                question: "How do you allocate an array on the heap?",
+                options: [
+                    "int* arr = new int[10];",
+                    "int arr = new [10];",
+                    "int* arr = new int 10;",
+                    "new int arr[10];"
+                ],
+                correct: 0,
+                explanation: "Use 'int* arr = new int[10];' to allocate an array of 10 integers."
+            },
+            {
+                id: 107,
+                block: 3,
+                type: "multiple",
+                question: "What is a memory leak?",
+                options: [
+                    "A type of error message",
+                    "When allocated memory is never freed",
+                    "A pointer error",
+                    "A compilation error"
+                ],
+                correct: 1,
+                explanation: "A memory leak occurs when dynamically allocated memory is not deallocated."
+            },
+            {
+                id: 108,
+                block: 3,
+                type: "multiple",
+                question: "What is pointer arithmetic?",
+                options: [
+                    "Mathematical operations on pointer values",
+                    "Adding/subtracting integers to move pointers through memory",
+                    "Dereferencing pointers",
+                    "Allocating memory"
+                ],
+                correct: 1,
+                explanation: "Pointer arithmetic lets you increment/decrement pointers to navigate arrays."
+            },
+            {
+                id: 109,
+                block: 3,
+                type: "multiple",
+                question: "What does ptr++ do to a pointer?",
+                options: [
+                    "Increments the value it points to",
+                    "Moves the pointer to the next element",
+                    "Deallocates the pointer",
+                    "Does nothing"
+                ],
+                correct: 1,
+                explanation: "ptr++ moves the pointer to the next element in memory."
+            },
+            {
+                id: 110,
+                block: 3,
+                type: "multiple",
+                question: "What is void*?",
+                options: [
+                    "A pointer to nothing",
+                    "A generic pointer that can point to any type",
+                    "An error type",
+                    "A null pointer"
+                ],
+                correct: 1,
+                explanation: "void* is a generic pointer type that can point to any data type."
+            },
+            {
+                id: 111,
+                block: 3,
+                type: "multiple",
+                question: "Can you dereference a void* directly?",
+                options: [
+                    "Yes, always",
+                    "No, you must cast it first",
+                    "Only sometimes",
+                    "It depends on the compiler"
+                ],
+                correct: 1,
+                explanation: "void* must be cast to a specific type before dereferencing."
+            },
+            {
+                id: 112,
+                block: 3,
+                type: "multiple",
+                question: "What is the difference between an array and a vector?",
+                options: [
+                    "Arrays are fixed size, vectors are dynamic",
+                    "Vectors are faster",
+                    "Arrays use pointers",
+                    "No significant difference"
+                ],
+                correct: 0,
+                explanation: "Arrays have fixed size; vectors can grow/shrink dynamically."
+            },
+            {
+                id: 113,
+                block: 3,
+                type: "multiple",
+                question: "How do you get the size of an array?",
+                options: [
+                    "arr.size()",
+                    "sizeof(arr) / sizeof(arr[0])",
+                    "arr.length()",
+                    "You can't get the size from a pointer"
+                ],
+                correct: 1,
+                explanation: "Array size is calculated as total memory divided by element size."
+            },
+            {
+                id: 114,
+                block: 3,
+                type: "multiple",
+                question: "What is the difference between arr[i] and *(arr + i)?",
+                options: [
+                    "arr[i] is faster",
+                    "*(arr + i) is faster",
+                    "They are equivalent",
+                    "One is for arrays, one is for pointers"
+                ],
+                correct: 2,
+                explanation: "arr[i] and *(arr + i) are equivalent; array indexing is syntactic sugar for pointer arithmetic."
+            },
+            {
+                id: 115,
+                block: 3,
+                type: "multiple",
+                question: "What does the at() method do on a vector?",
+                options: [
+                    "Returns the address of an element",
+                    "Accesses an element with bounds checking",
+                    "Adds an element",
+                    "Deletes an element"
+                ],
+                correct: 1,
+                explanation: "at() accesses vector elements with bounds checking and throws an exception if out of range."
+            },
+            {
+                id: 116,
+                block: 3,
+                type: "multiple",
+                question: "What is the difference between v[i] and v.at(i)?",
+                options: [
+                    "No difference",
+                    "v[i] has no bounds checking; v.at(i) throws an exception if out of range",
+                    "v.at(i) is faster",
+                    "v[i] only works for arrays"
+                ],
+                correct: 1,
+                explanation: "v[i] doesn't check bounds; v.at(i) throws an exception if i is out of range."
+            },
+            {
+                id: 117,
+                block: 3,
+                type: "multiple",
+                question: "How do you clear all elements from a vector?",
+                options: [
+                    "v.delete();",
+                    "v.clear();",
+                    "v.reset();",
+                    "delete v;"
+                ],
+                correct: 1,
+                explanation: "Use v.clear(); to remove all elements from a vector."
+            },
+            {
+                id: 118,
+                block: 3,
+                type: "multiple",
+                question: "Can a vector of pointers be created?",
+                options: [
+                    "No, vectors only hold values",
+                    "Yes, vector<int*> v;",
+                    "Yes, but it's not recommended",
+                    "Only in newer C++ versions"
+                ],
+                correct: 1,
+                explanation: "Yes, you can create vectors of pointers: 'vector<int*> v;'"
+            },
+            {
+                id: 119,
+                block: 3,
+                type: "multiple",
+                question: "What is the purpose of const with pointers?",
+                options: [
+                    "Makes the pointer immutable",
+                    "Makes the value it points to immutable",
+                    "Both a and b depending on placement",
+                    "Has no purpose"
+                ],
+                correct: 2,
+                explanation: "const int* makes the value const; int* const makes the pointer const."
+            },
+
+            // BLOCK 4: STRUCTURES AND STRINGS (30 questions)
+            {
+                id: 120,
+                block: 4,
+                type: "multiple",
+                question: "How do you define a structure?",
+                options: [
+                    "class MyStruct { };",
+                    "struct MyStruct { };",
+                    "structure MyStruct { };",
+                    "MyStruct { };"
+                ],
+                correct: 1,
+                explanation: "Structures are defined with the 'struct' keyword: 'struct MyStruct { };'"
+            },
+            {
+                id: 121,
+                block: 4,
+                type: "multiple",
+                question: "How do you access a structure member?",
+                options: [
+                    "myStruct->member",
+                    "myStruct.member",
+                    "myStruct[member]",
+                    "member(myStruct)"
+                ],
+                correct: 1,
+                explanation: "Structure members are accessed with the dot operator: 'myStruct.member'"
+            },
+            {
+                id: 122,
+                block: 4,
+                type: "multiple",
+                question: "How do you access a structure member through a pointer?",
+                options: [
+                    "ptr.member",
+                    "ptr->member",
+                    "(*ptr).member",
+                    "Both b and c are correct"
+                ],
+                correct: 3,
+                explanation: "Both 'ptr->member' and '(*ptr).member' access members through a pointer."
+            },
+            {
+                id: 123,
+                block: 4,
+                type: "multiple",
+                question: "Can you declare a vector of structures?",
+                options: [
+                    "No, vectors only hold primitive types",
+                    "Yes, vector<StructName> v;",
+                    "Only in certain C++ versions",
+                    "Yes, but not recommended"
+                ],
+                correct: 1,
+                explanation: "Yes, you can have vectors of structures: 'vector<MyStruct> v;'"
+            },
+            {
+                id: 124,
+                block: 4,
+                type: "multiple",
+                question: "How do you access a member of a structure in a vector?",
+                options: [
+                    "v[0].member",
+                    "v.member[0]",
+                    "v[member][0]",
+                    "v[0]->member"
+                ],
+                correct: 0,
+                explanation: "Use 'v[0].member' to access members of structures in a vector."
+            },
+            {
+                id: 125,
+                block: 4,
+                type: "multiple",
+                question: "What is std::string?",
+                options: [
+                    "A C-style string",
+                    "A standard library class for handling strings",
+                    "A character array",
+                    "A pointer to characters"
+                ],
+                correct: 1,
+                explanation: "std::string is a standard library class that provides string functionality."
+            },
+            {
+                id: 126,
+                block: 4,
+                type: "multiple",
+                question: "How do you declare a string?",
+                options: [
+                    "string str;",
+                    "std::string str;",
+                    "char* str;",
+                    "Both a and b are correct"
+                ],
+                correct: 3,
+                explanation: "Both 'string str;' (with using namespace std) and 'std::string str;' work."
+            },
+            {
+                id: 127,
+                block: 4,
+                type: "multiple",
+                question: "How do you initialize a string with a value?",
+                options: [
+                    "string str(\"hello\");",
+                    "string str = \"hello\";",
+                    "std::string str(\"hello\");",
+                    "All of the above are correct"
+                ],
+                correct: 3,
+                explanation: "All three methods initialize strings correctly."
+            },
+            {
+                id: 128,
+                block: 4,
+                type: "multiple",
+                question: "How do you get the length of a string?",
+                options: [
+                    "str.size()",
+                    "str.length()",
+                    "strlen(str)",
+                    "Both a and b are correct"
+                ],
+                correct: 3,
+                explanation: "Both size() and length() return the string length."
+            },
+            {
+                id: 129,
+                block: 4,
+                type: "multiple",
+                question: "How do you concatenate strings?",
+                options: [
+                    "str1 + str2",
+                    "str1.append(str2)",
+                    "Both a and b are correct",
+                    "strcat(str1, str2)"
+                ],
+                correct: 2,
+                explanation: "Both 'str1 + str2' and 'str1.append(str2)' concatenate strings."
+            },
+            {
+                id: 130,
+                block: 4,
+                type: "multiple",
+                question: "How do you compare two strings?",
+                options: [
+                    "str1 == str2",
+                    "str1.compare(str2) == 0",
+                    "Both a and b are correct",
+                    "strcmp(str1, str2)"
+                ],
+                correct: 2,
+                explanation: "Both '==' and compare() can compare std::strings."
+            },
+            {
+                id: 131,
+                block: 4,
+                type: "multiple",
+                question: "How do you access a character in a string?",
+                options: [
+                    "str[0]",
+                    "str.at(0)",
+                    "Both a and b are correct",
+                    "str.char(0)"
+                ],
+                correct: 2,
+                explanation: "Both str[0] and str.at(0) access characters in a string."
+            },
+            {
+                id: 132,
+                block: 4,
+                type: "multiple",
+                question: "What does str.substr(pos, len) do?",
+                options: [
+                    "Replaces part of the string",
+                    "Returns a substring starting at pos with length len",
+                    "Deletes a substring",
+                    "Finds a substring"
+                ],
+                correct: 1,
+                explanation: "substr() returns a new string that is a substring of the original."
+            },
+            {
+                id: 133,
+                block: 4,
+                type: "multiple",
+                question: "What does str.find(substring) do?",
+                options: [
+                    "Replaces substring",
+                    "Returns the position of the substring, or string::npos if not found",
+                    "Removes the substring",
+                    "Counts occurrences"
+                ],
+                correct: 1,
+                explanation: "find() returns the index of the first occurrence of the substring."
+            },
+            {
+                id: 134,
+                block: 4,
+                type: "multiple",
+                question: "Can you use = to assign to an array?",
+                options: [
+                    "Yes, always",
+                    "No, arrays are fixed after declaration",
+                    "Only for new arrays",
+                    "Only in modern C++"
+                ],
+                correct: 1,
+                explanation: "Arrays cannot be reassigned after declaration; you must assign individual elements."
+            },
+            {
+                id: 135,
+                block: 4,
+                type: "multiple",
+                question: "Can you use = to assign to a string?",
+                options: [
+                    "Yes, strings can be reassigned",
+                    "No, strings are immutable",
+                    "Only with const strings",
+                    "Only in certain cases"
+                ],
+                correct: 0,
+                explanation: "Yes, strings can be reassigned: 'str = \"new value\";'"
+            },
+            {
+                id: 136,
+                block: 4,
+                type: "multiple",
+                question: "What is the difference between a C-style string and std::string?",
+                options: [
+                    "No difference",
+                    "C-style strings are char arrays; std::string is a class with more features",
+                    "std::string is faster",
+                    "C-style strings are recommended"
+                ],
+                correct: 1,
+                explanation: "C-style strings are arrays of chars; std::string is a full-featured class."
+            },
+            {
+                id: 137,
+                block: 4,
+                type: "multiple",
+                question: "What does str.empty() return?",
+                options: [
+                    "The number of characters",
+                    "true if the string is empty, false otherwise",
+                    "An empty string",
+                    "The first character"
+                ],
+                correct: 1,
+                explanation: "empty() returns true if the string contains no characters."
+            },
+            {
+                id: 138,
+                block: 4,
+                type: "multiple",
+                question: "How do you clear a string?",
+                options: [
+                    "str.clear();",
+                    "str = \"\";",
+                    "Both a and b are correct",
+                    "delete str;"
+                ],
+                correct: 2,
+                explanation: "Both clear() and assignment to empty string work."
+            },
+            {
+                id: 139,
+                block: 4,
+                type: "multiple",
+                question: "What does str.c_str() do?",
+                options: [
+                    "Clears the string",
+                    "Returns a C-style string (const char*)",
+                    "Converts to uppercase",
+                    "Compares strings"
+                ],
+                correct: 1,
+                explanation: "c_str() returns a const char* pointer to the string data."
+            },
+            {
+                id: 140,
+                block: 4,
+                type: "multiple",
+                question: "Can structures contain other structures?",
+                options: [
+                    "No, not allowed",
+                    "Yes, nested structures are allowed",
+                    "Only with pointers",
+                    "Only in modern C++"
+                ],
+                correct: 1,
+                explanation: "Structures can be nested: one structure can contain another."
+            },
+            {
+                id: 141,
+                block: 4,
+                type: "multiple",
+                question: "How do you access a member of a nested structure?",
+                options: [
+                    "outer.inner.member",
+                    "outer[inner][member]",
+                    "outer.inner->member",
+                    "inner[member].outer"
+                ],
+                correct: 0,
+                explanation: "Use dot notation for each level: 'outer.inner.member'"
+            },
+            {
+                id: 142,
+                block: 4,
+                type: "multiple",
+                question: "Are structures passed by value or by reference by default?",
+                options: [
+                    "By value",
+                    "By reference",
+                    "It depends",
+                    "Neither"
+                ],
+                correct: 0,
+                explanation: "Structures are passed by value by default (a copy is made)."
+            },
+            {
+                id: 143,
+                block: 4,
+                type: "multiple",
+                question: "How do you pass a structure by reference?",
+                options: [
+                    "void func(MyStruct s) { }",
+                    "void func(MyStruct &s) { }",
+                    "void func(MyStruct *s) { }",
+                    "Both b and c are correct"
+                ],
+                correct: 3,
+                explanation: "Both reference (&) and pointer (*) pass by reference."
+            },
+            {
+                id: 144,
+                block: 4,
+                type: "multiple",
+                question: "What does str.insert(pos, substr) do?",
+                options: [
+                    "Replaces part of the string",
+                    "Inserts substr at position pos",
+                    "Removes from position pos",
+                    "Finds substr"
+                ],
+                correct: 1,
+                explanation: "insert() adds a substring at a specific position."
+            },
+            {
+                id: 145,
+                block: 4,
+                type: "multiple",
+                question: "What does str.erase(pos, len) do?",
+                options: [
+                    "Replaces part of the string",
+                    "Removes len characters starting at pos",
+                    "Finds and removes",
+                    "Clears the string"
+                ],
+                correct: 1,
+                explanation: "erase() removes characters from the string."
+            },
+            {
+                id: 146,
+                block: 4,
+                type: "multiple",
+                question: "Can you have an array of pointers to structures?",
+                options: [
+                    "No",
+                    "Yes, MyStruct* arr[10];",
+                    "Only with vectors",
+                    "Only in modern C++"
+                ],
+                correct: 1,
+                explanation: "Yes, you can have arrays of pointers: 'MyStruct* arr[10];'"
+            },
+            {
+                id: 147,
+                block: 4,
+                type: "multiple",
+                question: "How do you initialize a structure variable?",
+                options: [
+                    "MyStruct s = {value1, value2};",
+                    "MyStruct s; s.member = value;",
+                    "Both a and b are correct",
+                    "MyStruct s();"
+                ],
+                correct: 2,
+                explanation: "Both aggregate initialization and member assignment work."
+            },
+            {
+                id: 148,
+                block: 4,
+                type: "multiple",
+                question: "What is the size of an empty structure?",
+                options: [
+                    "0 bytes",
+                    "1 byte",
+                    "Depends on the compiler",
+                    "The size of the first member"
+                ],
+                correct: 2,
+                explanation: "Empty structures typically have a size of at least 1 byte (implementation-dependent)."
+            },
+            {
+                id: 149,
+                block: 4,
+                type: "multiple",
+                question: "Can you use auto with structures?",
+                options: [
+                    "No, not in C++",
+                    "Yes, auto var = myStruct;",
+                    "Only with pointers",
+                    "Only in C++17"
+                ],
+                correct: 1,
+                explanation: "Yes, auto can deduce the type: 'auto var = myStruct;'"
+            },
+            {
+                id: 150,
+                block: 4,
+                type: "multiple",
+                question: "What is the difference between struct and class in C++?",
+                options: [
+                    "No difference",
+                    "struct has public members by default; class has private",
+                    "class is more efficient",
+                    "struct is for C compatibility only"
+                ],
+                correct: 1,
+                explanation: "The main difference is default access level: struct members are public, class members are private."
+            }
+        ];
+
+        // Global variables
+        let userAnswers = {};
+        let currentFilter = 'all';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuestions();
+        });
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            let filteredQuestions = questions;
+            if (currentFilter !== 'all') {
+                filteredQuestions = questions.filter(q => q.block === parseInt(currentFilter));
+            }
+
+            document.getElementById('viewingCount').textContent = filteredQuestions.length;
+
+            let currentBlock = null;
+            filteredQuestions.forEach(question => {
+                if (currentBlock !== question.block) {
+                    currentBlock = question.block;
+                    const blockTitle = document.createElement('div');
+                    blockTitle.className = 'block-title';
+                    const weights = ['', '28%', '28%', '24%', '20%'];
+                    blockTitle.textContent = `Block ${question.block} (${weights[question.block]})`;
+                    container.appendChild(blockTitle);
+                }
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+
+                let html = `<div class="question-number">Question ${question.id} - Block ${question.block}</div>`;
+                html += `<div class="question-text">${question.question}</div>`;
+
+                if (question.codeSnippet) {
+                    html += `<div class="code-block">${question.codeSnippet}</div>`;
+                }
+
+                html += '<div class="options">';
+
+                question.options.forEach((option, index) => {
+                    const optionId = `q${question.id}_opt${index}`;
+                    html += `
+                        <label class="option">
+                            <input type="radio" name="q${question.id}" value="${index}" id="${optionId}">
+                            <label for="${optionId}" style="margin: 0;">${option}</label>
+                        </label>
+                    `;
+                });
+
+                html += '</div>';
+                questionDiv.innerHTML = html;
+
+                // Add event listeners
+                questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.addEventListener('change', function() {
+                        userAnswers[question.id] = parseInt(this.value);
+                    });
+                    if (userAnswers[question.id] !== undefined && userAnswers[question.id] === parseInt(input.value)) {
+                        input.checked = true;
+                    }
+                });
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Filter by block
+        function filterByBlock(block) {
+            currentFilter = block;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderQuestions();
+        }
+
+        // Submit answers
+        function submitAnswers() {
+            let score = 0;
+            const totalAnswered = Object.keys(userAnswers).length;
+            const resultsDiv = document.getElementById('resultDetails');
+            resultsDiv.innerHTML = '';
+
+            let filteredQuestions = questions;
+            if (currentFilter !== 'all') {
+                filteredQuestions = questions.filter(q => q.block === parseInt(currentFilter));
+            }
+
+            filteredQuestions.forEach(question => {
+                const userAnswer = userAnswers[question.id];
+                const isCorrect = userAnswer === question.correct;
+                if (isCorrect) score++;
+
+                const resultItem = document.createElement('div');
+                resultItem.className = `result-item ${isCorrect ? 'result-correct' : 'result-incorrect'}`;
+
+                let resultHTML = `<strong>Q${question.id}: ${isCorrect ? '✓ Correct' : '✗ Incorrect'}</strong><br>`;
+                resultHTML += `${question.question}<br>`;
+                if (userAnswer !== undefined) {
+                    resultHTML += `<strong>Your answer:</strong> ${question.options[userAnswer]}<br>`;
+                }
+                resultHTML += `<strong>Correct answer:</strong> ${question.options[question.correct]}<br>`;
+                resultHTML += `<div class="answer-explanation"><strong>Explanation:</strong> ${question.explanation}</div>`;
+
+                resultItem.innerHTML = resultHTML;
+                resultsDiv.appendChild(resultItem);
+            });
+
+            const percentage = filteredQuestions.length > 0 ? Math.round((score / filteredQuestions.length) * 100) : 0;
+            document.getElementById('scoreResult').textContent = `Score: ${score}/${filteredQuestions.length} (${percentage}%)`;
+            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+            document.getElementById('resultsSection').classList.add('show');
+            window.scrollTo(0, 0);
+        }
+
+        // Show answers
+        function showAnswers() {
+            const containers = document.querySelectorAll('.question-container');
+            containers.forEach(container => {
+                const inputs = container.querySelectorAll('input[type="radio"]');
+                inputs.forEach((input, index) => {
+                    const label = input.parentElement;
+                    if (parseInt(input.value) === parseInt(container.dataset.correct || -1)) {
+                        label.classList.add('correct');
+                    }
+                });
+            });
+            alert('Correct answers have been highlighted (if you submitted).');
+        }
+
+        // Reset all
+        function resetAll() {
+            userAnswers = {};
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.getElementById('resultsSection').classList.remove('show');
+            document.getElementById('scoreDisplay').textContent = '-';
+            alert('All answers have been reset.');
+        }
+    </script>
+</body>
+</html>
