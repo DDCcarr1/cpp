@@ -356,7 +356,7 @@
             <div class="stats">
                 <div class="stat-item">
                     <div class="stat-label">Total Questions</div>
-                    <div class="stat-value" id="totalCount">150</div>
+                    <div class="stat-value" id="totalCount">149</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Currently Viewing</div>
@@ -376,11 +376,11 @@
         </div>
 
         <div class="filter-section" id="filterSection">
-            <button class="filter-btn active" onclick="filterByBlock('all')">All Blocks</button>
-            <button class="filter-btn" onclick="filterByBlock('1')">Block 1</button>
-            <button class="filter-btn" onclick="filterByBlock('2')">Block 2</button>
-            <button class="filter-btn" onclick="filterByBlock('3')">Block 3</button>
-            <button class="filter-btn" onclick="filterByBlock('4')">Block 4</button>
+            <button class="filter-btn active" onclick="filterByBlock(this, 'all')">All Blocks</button>
+            <button class="filter-btn" onclick="filterByBlock(this, '1')">Block 1</button>
+            <button class="filter-btn" onclick="filterByBlock(this, '2')">Block 2</button>
+            <button class="filter-btn" onclick="filterByBlock(this, '3')">Block 3</button>
+            <button class="filter-btn" onclick="filterByBlock(this, '4')">Block 4</button>
         </div>
 
         <div id="questionsContainer"></div>
@@ -2438,6 +2438,7 @@
 
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question-container';
+                questionDiv.dataset.correct = question.correct;
 
                 let html = `<div class="question-number">Question ${question.id} - Block ${question.block}</div>`;
                 html += `<div class="question-text">${question.question}</div>`;
@@ -2453,7 +2454,7 @@
                     html += `
                         <label class="option">
                             <input type="radio" name="q${question.id}" value="${index}" id="${optionId}">
-                            <label for="${optionId}" style="margin: 0;">${option}</label>
+                            <span>${option}</span>
                         </label>
                     `;
                 });
@@ -2476,10 +2477,10 @@
         }
 
         // Filter by block
-        function filterByBlock(block) {
+        function filterByBlock(btn, block) {
             currentFilter = block;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             renderQuestions();
         }
 
@@ -2526,15 +2527,15 @@
         function showAnswers() {
             const containers = document.querySelectorAll('.question-container');
             containers.forEach(container => {
+                const correct = parseInt(container.dataset.correct);
                 const inputs = container.querySelectorAll('input[type="radio"]');
                 inputs.forEach((input, index) => {
-                    const label = input.parentElement;
-                    if (parseInt(input.value) === parseInt(container.dataset.correct || -1)) {
-                        label.classList.add('correct');
+                    if (index === correct) {
+                        input.parentElement.classList.add('correct');
                     }
                 });
             });
-            alert('Correct answers have been highlighted (if you submitted).');
+            alert('Correct answers have been highlighted.');
         }
 
         // Reset all
