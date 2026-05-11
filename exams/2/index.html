@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPE – C++ Certified Entry-Level Programmer Exam</title>
+    <title>CPE – C++ Certified Entry-Level Programmer Exam (Version 2)</title>
     <style>
         * {
             margin: 0;
@@ -492,7 +492,7 @@
     <div class="container">
         <div class="header">
             <h1>CPE – C++ Certified Entry-Level Programmer</h1>
-            <p>Exam Code: CPE-20-01</p>
+            <p>Exam Code: CPE-20-01 (Alternate Version)</p>
         </div>
 
         <div class="exam-info">
@@ -519,8 +519,8 @@
         <div class="content">
             <!-- Intro Section -->
             <div id="introSection" class="intro-section">
-                <h2>Welcome to the CPE Exam Simulator</h2>
-                <p>This exam tests your foundational knowledge of C++ programming.</p>
+                <h2>Welcome to the CPE Exam Simulator (Version 2)</h2>
+                <p>This is an alternate set of questions testing your foundational C++ knowledge.</p>
                 <p>You have <strong>45 minutes</strong> to complete <strong>30 questions</strong>.</p>
                 <p>You must achieve <strong>70% or higher</strong> to pass the exam.</p>
                 <p>Questions vary in point value based on complexity.</p>
@@ -586,427 +586,427 @@
     </div>
 
     <script>
-        // Exam data
+        // Exam data - Version 2 (Alternate questions)
         const examQuestions = [
             {
                 id: 1,
                 block: 1,
                 type: "single-choice",
                 points: 4,
-                question: "Which of the following is a valid C++ variable declaration?",
+                question: "Which of the following correctly declares and initializes a float variable?",
                 options: [
-                    { text: "int x = 10;", correct: true },
-                    { text: "10x int;", correct: false },
-                    { text: "int 10 = x;", correct: false },
-                    { text: "x int = 10;", correct: false }
+                    { text: "float pi = 3.14f;", correct: true },
+                    { text: "float pi = 3.14;", correct: false },
+                    { text: "float pi = '3.14';", correct: false },
+                    { text: "float = 3.14;", correct: false }
                 ],
-                explanation: "In C++, valid variable declarations follow the pattern: type name = value; The correct syntax is 'int x = 10;'"
+                explanation: "Float literals must be suffixed with 'f' (e.g., 3.14f). Without it, 3.14 is a double literal."
             },
             {
                 id: 2,
                 block: 1,
                 type: "single-choice",
                 points: 4,
-                question: "What is the output of: cout << 5 + 3 * 2; ?",
+                question: "What is the result of: int x = 10; int y = 3; cout << x % y;",
                 options: [
-                    { text: "16", correct: false },
-                    { text: "11", correct: true },
-                    { text: "23", correct: false },
-                    { text: "13", correct: false }
+                    { text: "3", correct: false },
+                    { text: "1", correct: true },
+                    { text: "3.33", correct: false },
+                    { text: "30", correct: false }
                 ],
-                explanation: "Due to operator precedence, multiplication (*) is performed before addition (+). So 3 * 2 = 6, then 5 + 6 = 11."
+                explanation: "The modulo operator (%) returns the remainder of division. 10 % 3 = 1 (10 divided by 3 leaves remainder 1)."
             },
             {
                 id: 3,
                 block: 1,
                 type: "multiple-choice",
                 points: 5,
-                question: "Which of the following are valid C++ operators? (Select all that apply)",
+                question: "Which statements about C++ data types are correct? (Select all that apply)",
                 options: [
-                    { text: "++ (increment)", correct: true },
-                    { text: "-- (decrement)", correct: true },
-                    { text: "** (exponentiation)", correct: false },
-                    { text: "% (modulo)", correct: true }
+                    { text: "char stores single characters", correct: true },
+                    { text: "bool stores true/false values", correct: true },
+                    { text: "string is a primitive data type", correct: false },
+                    { text: "int stores integers", correct: true }
                 ],
-                explanation: "C++ supports ++, --, and % operators, but not **. The exponentiation operator ** is used in Python, not C++."
+                explanation: "char, bool, and int are primitive types. std::string is a class-based type from the standard library."
             },
             {
                 id: 4,
                 block: 1,
                 type: "single-choice",
                 points: 4,
-                question: "What type is the literal 3.14?",
+                question: "What is the output of: cout << 2 * 3 + 4 * 5;",
                 options: [
-                    { text: "int", correct: false },
-                    { text: "float", correct: true },
-                    { text: "double", correct: false },
-                    { text: "char", correct: false }
+                    { text: "70", correct: false },
+                    { text: "26", correct: true },
+                    { text: "70", correct: false },
+                    { text: "50", correct: false }
                 ],
-                explanation: "Floating-point literals without a suffix (like 3.14) are of type 'float' by default in C++."
+                explanation: "Both * operators are evaluated first (left to right): 2*3=6, 4*5=20, then 6+20=26."
             },
             {
                 id: 5,
                 block: 1,
                 type: "single-choice",
                 points: 5,
-                question: "Which of the following shows correct operator precedence?",
+                question: "Which operator has the highest precedence?",
                 options: [
-                    { text: "(+, -, *, /)", correct: false },
-                    { text: "(*, /, %, +, -)", correct: true },
-                    { text: "(+, -, *, /)", correct: false },
-                    { text: "(/, *, +, -)", correct: false }
+                    { text: "+", correct: false },
+                    { text: "*", correct: true },
+                    { text: "||", correct: false },
+                    { text: "=", correct: false }
                 ],
-                explanation: "In C++, multiplication, division, and modulo have higher precedence than addition and subtraction."
+                explanation: "Among these operators, * (multiplication) has the highest precedence, followed by +, then ||, then =."
             },
             {
                 id: 6,
                 block: 1,
                 type: "single-choice",
                 points: 4,
-                question: "What is the purpose of cin in C++?",
+                question: "What does 'endl' do in C++?",
                 options: [
-                    { text: "Output data", correct: false },
-                    { text: "Input data", correct: true },
-                    { text: "Declare variables", correct: false },
-                    { text: "Create functions", correct: false }
+                    { text: "Ends the program", correct: false },
+                    { text: "Outputs a newline and flushes the buffer", correct: true },
+                    { text: "Ends a function", correct: false },
+                    { text: "Ends a loop", correct: false }
                 ],
-                explanation: "cin is an input stream used to read data from the user or other input sources."
+                explanation: "endl outputs a newline character and flushes the output buffer, unlike '\\n' which only outputs a newline."
             },
             {
                 id: 7,
                 block: 1,
                 type: "single-choice",
                 points: 4,
-                question: "Which is NOT a valid C++ keyword?",
+                question: "Which is a correct way to write a character literal in C++?",
                 options: [
-                    { text: "void", correct: false },
-                    { text: "class", correct: false },
-                    { text: "function", correct: true },
-                    { text: "return", correct: false }
+                    { text: "'A'", correct: true },
+                    { text: "\"A\"", correct: false },
+                    { text: "A", correct: false },
+                    { text: "'AB'", correct: false }
                 ],
-                explanation: "'function' is not a C++ keyword. To define functions, you use the return type (like void or int), not 'function' keyword."
+                explanation: "Single quotes denote character literals. Double quotes denote string literals. 'AB' is invalid as char can only hold one character."
             },
             {
                 id: 8,
                 block: 1,
                 type: "single-choice",
                 points: 5,
-                question: "What does the short-circuit AND (&&) operator do?",
+                question: "What happens with short-circuit evaluation in: false && (x = 5)?",
                 options: [
-                    { text: "Evaluates all conditions", correct: false },
-                    { text: "Stops evaluating if first condition is false", correct: true },
-                    { text: "Always returns true", correct: false },
-                    { text: "Stops evaluating if first condition is true", correct: false }
+                    { text: "x becomes 5", correct: false },
+                    { text: "x is not assigned", correct: true },
+                    { text: "Error occurs", correct: false },
+                    { text: "x becomes 0", correct: false }
                 ],
-                explanation: "With &&, if the first condition is false, the second condition is not evaluated. This is short-circuit logic."
+                explanation: "With &&, if the first condition is false, the second is not evaluated. So x = 5 never executes."
             },
             {
                 id: 9,
                 block: 1,
                 type: "single-choice",
                 points: 5,
-                question: "What is the value of x after: int x = 5; x += 3; ?",
+                question: "What is the type of the literal 42?",
                 options: [
-                    { text: "5", correct: false },
-                    { text: "8", correct: true },
-                    { text: "3", correct: false },
-                    { text: "15", correct: false }
+                    { text: "float", correct: false },
+                    { text: "double", correct: false },
+                    { text: "int", correct: true },
+                    { text: "long", correct: false }
                 ],
-                explanation: "The += operator is a compound assignment: x += 3 is equivalent to x = x + 3, so 5 + 3 = 8."
+                explanation: "Integer literals without a suffix are of type 'int' by default."
             },
             {
                 id: 10,
                 block: 2,
                 type: "single-choice",
                 points: 4,
-                question: "What is the output of the following code?\nif (5 > 3) cout << 'A';\nelse cout << 'B';",
+                question: "What is the output of:\nfor(int i = 5; i > 2; i--) cout << i;",
                 options: [
-                    { text: "A", correct: true },
-                    { text: "B", correct: false },
-                    { text: "AB", correct: false },
+                    { text: "543", correct: true },
+                    { text: "234", correct: false },
+                    { text: "5432", correct: false },
                     { text: "No output", correct: false }
                 ],
-                explanation: "Since 5 > 3 is true, the if block executes and outputs 'A'."
+                explanation: "The loop starts at 5, decrements, and runs while i > 2. Outputs: 5, 4, 3."
             },
             {
                 id: 11,
                 block: 2,
                 type: "single-choice",
                 points: 4,
-                question: "Which loop control statement terminates a loop immediately?",
+                question: "What does 'continue' do in a loop?",
                 options: [
-                    { text: "continue", correct: false },
-                    { text: "break", correct: true },
-                    { text: "return", correct: false },
-                    { text: "exit", correct: false }
+                    { text: "Exits the loop", correct: false },
+                    { text: "Skips the rest of the iteration", correct: true },
+                    { text: "Repeats the loop", correct: false },
+                    { text: "Pauses the loop", correct: false }
                 ],
-                explanation: "The 'break' statement terminates the nearest enclosing loop. 'continue' skips to the next iteration."
+                explanation: "'continue' skips the remaining statements in the current iteration and jumps to the next iteration."
             },
             {
                 id: 12,
                 block: 2,
                 type: "single-choice",
                 points: 5,
-                question: "What is the output of this for loop?\nfor(int i = 0; i < 3; i++) cout << i;",
+                question: "Which is the correct syntax for a function definition?",
                 options: [
-                    { text: "012", correct: true },
-                    { text: "123", correct: false },
-                    { text: "0123", correct: false },
-                    { text: "1", correct: false }
+                    { text: "int add(int a, int b) { return a + b; }", correct: true },
+                    { text: "add(int a, int b) { return a + b; }", correct: false },
+                    { text: "int add { return a + b; }", correct: false },
+                    { text: "add int(a, b) { return a + b; }", correct: false }
                 ],
-                explanation: "The loop initializes i to 0, increments after each iteration, and runs while i < 3. So it outputs: 0, 1, 2."
+                explanation: "Function syntax: returnType name(parameters) { body }. Return type is required."
             },
             {
                 id: 13,
                 block: 2,
                 type: "multiple-choice",
                 points: 5,
-                question: "Which are valid loop types in C++? (Select all that apply)",
+                question: "Which are control flow statements in C++? (Select all that apply)",
                 options: [
-                    { text: "while loop", correct: true },
-                    { text: "for loop", correct: true },
-                    { text: "do-while loop", correct: true },
-                    { text: "repeat loop", correct: false }
+                    { text: "if", correct: true },
+                    { text: "switch", correct: true },
+                    { text: "while", correct: true },
+                    { text: "return", correct: true }
                 ],
-                explanation: "C++ supports while, for, and do-while loops. There is no 'repeat loop' in standard C++."
+                explanation: "All of these are control flow statements that control the execution path of a program."
             },
             {
                 id: 14,
                 block: 2,
                 type: "single-choice",
                 points: 4,
-                question: "Which keyword is used to pass a function to another function?",
+                question: "Can a function return without a value?",
                 options: [
-                    { text: "pass", correct: false },
-                    { text: "send", correct: false },
-                    { text: "Arguments", correct: true },
-                    { text: "call", correct: false }
+                    { text: "Only if it returns 0", correct: false },
+                    { text: "Yes, if the return type is void", correct: true },
+                    { text: "No, always required", correct: false },
+                    { text: "Only with main()", correct: false }
                 ],
-                explanation: "Function arguments (parameters) are used to pass data to functions."
+                explanation: "Void functions don't return a value. They can have 'return;' statements without values."
             },
             {
                 id: 15,
                 block: 2,
                 type: "single-choice",
                 points: 5,
-                question: "What does a recursive function do?",
+                question: "What is the base case in a recursive function?",
                 options: [
-                    { text: "Calls another function", correct: false },
-                    { text: "Calls itself", correct: true },
-                    { text: "Loops indefinitely", correct: false },
-                    { text: "Returns multiple values", correct: false }
+                    { text: "The first function call", correct: false },
+                    { text: "The condition that stops recursion", correct: true },
+                    { text: "The return statement", correct: false },
+                    { text: "The main function", correct: false }
                 ],
-                explanation: "A recursive function is one that calls itself. It must have a base case to prevent infinite recursion."
+                explanation: "The base case is the condition that terminates recursion to prevent infinite calls."
             },
             {
                 id: 16,
                 block: 2,
                 type: "single-choice",
                 points: 5,
-                question: "Which statement returns a value from a function?",
+                question: "How do you pass a parameter by reference in C++?",
                 options: [
-                    { text: "send", correct: false },
-                    { text: "output", correct: false },
-                    { text: "return", correct: true },
-                    { text: "print", correct: false }
+                    { text: "void func(int a)", correct: false },
+                    { text: "void func(int& a)", correct: true },
+                    { text: "void func(int* a)", correct: false },
+                    { text: "void func(&int a)", correct: false }
                 ],
-                explanation: "The 'return' statement is used to exit a function and optionally return a value."
+                explanation: "The & symbol after the type creates a reference parameter: type& paramName"
             },
             {
                 id: 17,
                 block: 2,
                 type: "single-choice",
                 points: 4,
-                question: "What is the difference between pass by value and pass by reference?",
+                question: "What does the do-while loop do?",
                 options: [
-                    { text: "No difference", correct: false },
-                    { text: "Pass by value copies the data; pass by reference uses the original", correct: true },
-                    { text: "Pass by reference is faster", correct: false },
-                    { text: "Pass by value is more secure", correct: false }
+                    { text: "Executes once then checks condition", correct: true },
+                    { text: "Checks condition first", correct: false },
+                    { text: "Never executes", correct: false },
+                    { text: "Executes twice", correct: false }
                 ],
-                explanation: "Pass by value creates a copy of the argument; pass by reference (&) allows the function to modify the original variable."
+                explanation: "do-while executes the body first, then checks the condition. It always runs at least once."
             },
             {
                 id: 18,
                 block: 3,
                 type: "single-choice",
                 points: 4,
-                question: "How do you declare a vector of integers?",
+                question: "How do you declare an array of 10 integers?",
                 options: [
-                    { text: "vector<int> v;", correct: true },
-                    { text: "int[] v;", correct: false },
-                    { text: "int v[10];", correct: false },
-                    { text: "vector v;", correct: false }
+                    { text: "int arr[10];", correct: true },
+                    { text: "int[10] arr;", correct: false },
+                    { text: "array<int, 10> arr;", correct: false },
+                    { text: "int arr = 10;", correct: false }
                 ],
-                explanation: "Vectors are declared with the syntax: vector<type> name;"
+                explanation: "Arrays are declared with: type name[size];"
             },
             {
                 id: 19,
                 block: 3,
                 type: "single-choice",
                 points: 5,
-                question: "What does a pointer store?",
+                question: "What does the address-of operator & return?",
                 options: [
-                    { text: "A value", correct: false },
-                    { text: "An address of a variable", correct: true },
-                    { text: "A function", correct: false },
-                    { text: "An array", correct: false }
+                    { text: "The value of the variable", correct: false },
+                    { text: "The memory address of the variable", correct: true },
+                    { text: "A copy of the variable", correct: false },
+                    { text: "The type of the variable", correct: false }
                 ],
-                explanation: "A pointer stores the memory address of another variable, not the value itself."
+                explanation: "& is the address-of operator. It returns the memory address where a variable is stored."
             },
             {
                 id: 20,
                 block: 3,
                 type: "single-choice",
                 points: 4,
-                question: "What operator dereferences a pointer to get the value?",
+                question: "How do you declare a pointer to an integer?",
                 options: [
-                    { text: "&", correct: false },
-                    { text: "*", correct: true },
-                    { text: "->", correct: false },
-                    { text: ".", correct: false }
+                    { text: "int* ptr;", correct: true },
+                    { text: "*int ptr;", correct: false },
+                    { text: "int ptr*;", correct: false },
+                    { text: "pointer<int> ptr;", correct: false }
                 ],
-                explanation: "The * operator dereferences a pointer. For example, if p is a pointer, *p gives the value it points to."
+                explanation: "Pointer syntax: type* pointerName; The asterisk comes before the variable name."
             },
             {
                 id: 21,
                 block: 3,
                 type: "single-choice",
                 points: 5,
-                question: "What does the & operator do?",
+                question: "What is the size of a vector after: vector<int> v; v.push_back(5);",
                 options: [
-                    { text: "Dereferences a pointer", correct: false },
-                    { text: "Gets the address of a variable", correct: true },
-                    { text: "Creates a reference", correct: false },
-                    { text: "Performs bitwise AND", correct: false }
+                    { text: "0", correct: false },
+                    { text: "1", correct: true },
+                    { text: "5", correct: false },
+                    { text: "10", correct: false }
                 ],
-                explanation: "The & operator gets the address of a variable. For example, &x gives the memory address of variable x."
+                explanation: "push_back() adds one element to the vector, so the size becomes 1."
             },
             {
                 id: 22,
                 block: 3,
                 type: "single-choice",
                 points: 4,
-                question: "Which keyword creates a dynamic array?",
+                question: "How do you allocate dynamic memory in C++?",
                 options: [
                     { text: "malloc", correct: false },
                     { text: "new", correct: true },
-                    { text: "create", correct: false },
-                    { text: "allocate", correct: false }
+                    { text: "alloc", correct: false },
+                    { text: "create", correct: false }
                 ],
-                explanation: "The 'new' keyword allocates memory dynamically in C++. Use 'delete' to free the memory."
+                explanation: "The 'new' operator allocates memory on the heap in C++."
             },
             {
                 id: 23,
                 block: 3,
                 type: "single-choice",
                 points: 5,
-                question: "What is nullptr used for?",
+                question: "What keyword deallocates memory allocated with new?",
                 options: [
-                    { text: "Represents a zero value", correct: false },
-                    { text: "Represents a null pointer", correct: true },
-                    { text: "Represents an empty array", correct: false },
-                    { text: "Represents false", correct: false }
+                    { text: "free", correct: false },
+                    { text: "remove", correct: false },
+                    { text: "delete", correct: true },
+                    { text: "destroy", correct: false }
                 ],
-                explanation: "nullptr is the null pointer constant in C++11 and later, representing a pointer that points to nothing."
+                explanation: "The 'delete' operator deallocates memory that was allocated with 'new'."
             },
             {
                 id: 24,
                 block: 3,
                 type: "single-choice",
-                points: 4,
-                question: "How do you access the first element of a vector v?",
+                points: 5,
+                question: "What is a 2D array in C++?",
                 options: [
-                    { text: "v[0]", correct: true },
-                    { text: "v(0)", correct: false },
-                    { text: "v.first", correct: false },
-                    { text: "v.at(1)", correct: false }
+                    { text: "An array of arrays", correct: true },
+                    { text: "An array with two elements", correct: false },
+                    { text: "A vector of vectors", correct: false },
+                    { text: "A pointer array", correct: false }
                 ],
-                explanation: "Vectors are zero-indexed, so the first element is accessed with v[0]."
+                explanation: "A 2D array is declared as: type arr[rows][cols]. It's an array where each element is itself an array."
             },
             {
                 id: 25,
                 block: 4,
                 type: "single-choice",
                 points: 4,
-                question: "How do you declare a structure in C++?",
+                question: "What is a structure member?",
                 options: [
-                    { text: "struct Name { };", correct: true },
-                    { text: "structure Name { };", correct: false },
-                    { text: "class Name { };", correct: false },
-                    { text: "define Name { };", correct: false }
+                    { text: "A variable inside a structure", correct: true },
+                    { text: "A function inside a structure", correct: false },
+                    { text: "A pointer inside a structure", correct: false },
+                    { text: "A class inside a structure", correct: false }
                 ],
-                explanation: "Structures are declared using the 'struct' keyword, followed by the structure name and its members."
+                explanation: "Structure members are the variables declared inside a structure that hold data."
             },
             {
                 id: 26,
                 block: 4,
                 type: "single-choice",
                 points: 5,
-                question: "How do you access a structure member using the dot operator?",
+                question: "How do you access a pointer's member?",
                 options: [
-                    { text: "struct.member", correct: true },
-                    { text: "struct->member", correct: false },
-                    { text: "struct[member]", correct: false },
-                    { text: "struct(member)", correct: false }
+                    { text: "ptr.member", correct: false },
+                    { text: "ptr->member", correct: true },
+                    { text: "ptr[member]", correct: false },
+                    { text: "&ptr.member", correct: false }
                 ],
-                explanation: "The dot operator (.) is used to access members of a structure instance: variable.member"
+                explanation: "The arrow operator (->) is used to access members through a pointer: ptr->member"
             },
             {
                 id: 27,
                 block: 4,
                 type: "single-choice",
                 points: 5,
-                question: "How do you create a std::string in C++?",
+                question: "How do you find the length of a std::string s?",
                 options: [
-                    { text: "string str = 'hello';", correct: false },
-                    { text: 'string str = \"hello\";', correct: true },
-                    { text: "char str = 'hello';", correct: false },
-                    { text: "std str = 'hello';", correct: false }
+                    { text: "s.length()", correct: true },
+                    { text: "s.count()", correct: false },
+                    { text: "s.len()", correct: false },
+                    { text: "size(s)", correct: false }
                 ],
-                explanation: "std::string uses double quotes. Single quotes are for individual characters (char type)."
+                explanation: "Use the length() method: s.length() returns the number of characters in the string."
             },
             {
                 id: 28,
                 block: 4,
                 type: "single-choice",
                 points: 4,
-                question: "What method returns the length of a std::string?",
+                question: "Can you compare two strings using ==?",
                 options: [
-                    { text: "str.size()", correct: true },
-                    { text: "str.length()", correct: false },
-                    { text: "str.count()", correct: false },
-                    { text: "str.len()", correct: false }
+                    { text: "No", correct: false },
+                    { text: "Yes", correct: true },
+                    { text: "Only with char arrays", correct: false },
+                    { text: "Only with pointers", correct: false }
                 ],
-                explanation: "Both size() and length() work for std::string, but size() is the most common method."
+                explanation: "std::string overloads the == operator, so you can compare strings directly: s1 == s2"
             },
             {
                 id: 29,
                 block: 4,
                 type: "multiple-choice",
                 points: 5,
-                question: "Which are valid string operations in C++? (Select all that apply)",
+                question: "Which are valid string operations? (Select all that apply)",
                 options: [
-                    { text: "Concatenation with +", correct: true },
-                    { text: "Comparison with ==", correct: true },
-                    { text: "Indexing with []", correct: true },
-                    { text: "Division with /", correct: false }
+                    { text: "Append with +", correct: true },
+                    { text: "Substring with substr()", correct: true },
+                    { text: "Find with find()", correct: true },
+                    { text: "Multiply with *", correct: false }
                 ],
-                explanation: "Strings support concatenation (+), comparison (==), and indexing ([]). String division is not a valid operation."
+                explanation: "Strings support +, substr(), and find() methods. String multiplication is not a standard operation."
             },
             {
                 id: 30,
                 block: 4,
                 type: "single-choice",
                 points: 5,
-                question: "Can you create a vector of structures in C++?",
+                question: "How do you declare a vector of strings?",
                 options: [
-                    { text: "No", correct: false },
-                    { text: "Yes, with vector<StructName>", correct: true },
-                    { text: "Only with arrays", correct: false },
-                    { text: "Only with pointers", correct: false }
+                    { text: "vector<string> v;", correct: true },
+                    { text: "string[] v;", correct: false },
+                    { text: "vector<char> v;", correct: false },
+                    { text: "vector v;", correct: false }
                 ],
-                explanation: "You can create a vector of any type, including structures: vector<StructName> vec;"
+                explanation: "Vectors of strings are declared as: vector<string> variableName;"
             }
         ];
 
