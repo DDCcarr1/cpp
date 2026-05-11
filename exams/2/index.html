@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPE – C++ Certified Entry-Level Programmer Exam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .exam-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .timer {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .intro-section h2 {
+            color: #212529;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .intro-section p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .questions-container {
+            display: none;
+        }
+
+        .questions-container.active {
+            display: block;
+        }
+
+        .question-counter {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #0c5aa0;
+        }
+
+        .question-block {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .question-item {
+            background: white;
+            padding: 25px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .question-item.answered {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+
+        .question-item.incorrect {
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            background: #e7f3ff;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .option-code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            padding-top: 30px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .score-display h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .score-percent {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .pass-status {
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .pass-status.passed {
+            background: #28a745;
+            color: white;
+        }
+
+        .pass-status.failed {
+            background: #dc3545;
+            color: white;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            color: #212529;
+            font-weight: 700;
+        }
+
+        .review-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .review-section h3 {
+            color: #212529;
+            margin-bottom: 15px;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #dee2e6;
+        }
+
+        .review-item.correct {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+
+        .review-item-number {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .review-item-question {
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .review-item-answer {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .review-item-answer strong {
+            color: #495057;
+        }
+
+        .explanation {
+            font-size: 14px;
+            color: #6c757d;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .explanation.correct {
+            background: #d4edda;
+            color: #155724;
+            font-style: normal;
+        }
+
+        .explanation.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            font-style: normal;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .exam-paused {
+            display: none;
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .exam-paused.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .exam-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CPE – C++ Certified Entry-Level Programmer</h1>
+            <p>Exam Code: CPE-20-01</p>
+        </div>
+
+        <div class="exam-info">
+            <div class="info-item">
+                <div class="info-label">Duration</div>
+                <div class="info-value">45 Minutes</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value">30</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Passing Score</div>
+                <div class="info-value">70%</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Max Points</div>
+                <div class="info-value">120</div>
+            </div>
+        </div>
+
+        <div class="timer" id="timer"></div>
+
+        <div class="content">
+            <!-- Intro Section -->
+            <div id="introSection" class="intro-section">
+                <h2>Welcome to the CPE Exam Simulator</h2>
+                <p>This exam tests your foundational knowledge of C++ programming.</p>
+                <p>You have <strong>45 minutes</strong> to complete <strong>30 questions</strong>.</p>
+                <p>You must achieve <strong>70% or higher</strong> to pass the exam.</p>
+                <p>Questions vary in point value based on complexity.</p>
+                <button class="start-btn" onclick="startExam()">Start Exam</button>
+            </div>
+
+            <!-- Exam Paused Alert -->
+            <div class="exam-paused" id="pausedAlert">
+                <p><strong>Time's Up!</strong> Your exam has been automatically submitted.</p>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questionsContainer" class="questions-container">
+                <div class="question-counter">
+                    Question <span id="currentQuestion">1</span> of <span id="totalQuestions">30</span>
+                </div>
+                <div id="questionsWrapper"></div>
+            </div>
+
+            <!-- Results Container -->
+            <div id="resultsContainer" class="results-container">
+                <h2>Exam Completed</h2>
+                <div class="score-display">
+                    <h2>Your Score</h2>
+                    <div class="score-percent" id="scorePercent">0%</div>
+                    <div class="pass-status" id="passStatus"></div>
+                </div>
+
+                <div class="summary-stats">
+                    <div class="stat">
+                        <div class="stat-label">Correct Answers</div>
+                        <div class="stat-value"><span id="correctCount">0</span></div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Points Earned</div>
+                        <div class="stat-value"><span id="pointsEarned">0</span></div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Max Points</div>
+                        <div class="stat-value">120</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Time Used</div>
+                        <div class="stat-value" id="timeUsed">45:00</div>
+                    </div>
+                </div>
+
+                <div class="review-section" id="reviewSection">
+                    <h3>Answer Review</h3>
+                    <div id="reviewContent"></div>
+                </div>
+
+                <button class="restart-btn" onclick="location.reload()">Take Exam Again</button>
+            </div>
+
+            <!-- Buttons Container -->
+            <div id="buttonsContainer" class="buttons-container" style="display: none;">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-secondary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                <button class="btn btn-primary" id="submitBtn" onclick="submitExam()">Check All Answers</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Exam data
+        const examQuestions = [
+            {
+                id: 1,
+                block: 1,
+                type: "single-choice",
+                points: 4,
+                question: "Which of the following is a valid C++ variable declaration?",
+                options: [
+                    { text: "int x = 10;", correct: true },
+                    { text: "10x int;", correct: false },
+                    { text: "int 10 = x;", correct: false },
+                    { text: "x int = 10;", correct: false }
+                ],
+                explanation: "In C++, valid variable declarations follow the pattern: type name = value; The correct syntax is 'int x = 10;'"
+            },
+            {
+                id: 2,
+                block: 1,
+                type: "single-choice",
+                points: 4,
+                question: "What is the output of: cout << 5 + 3 * 2; ?",
+                options: [
+                    { text: "16", correct: false },
+                    { text: "11", correct: true },
+                    { text: "23", correct: false },
+                    { text: "13", correct: false }
+                ],
+                explanation: "Due to operator precedence, multiplication (*) is performed before addition (+). So 3 * 2 = 6, then 5 + 6 = 11."
+            },
+            {
+                id: 3,
+                block: 1,
+                type: "multiple-choice",
+                points: 5,
+                question: "Which of the following are valid C++ operators? (Select all that apply)",
+                options: [
+                    { text: "++ (increment)", correct: true },
+                    { text: "-- (decrement)", correct: true },
+                    { text: "** (exponentiation)", correct: false },
+                    { text: "% (modulo)", correct: true }
+                ],
+                explanation: "C++ supports ++, --, and % operators, but not **. The exponentiation operator ** is used in Python, not C++."
+            },
+            {
+                id: 4,
+                block: 1,
+                type: "single-choice",
+                points: 4,
+                question: "What type is the literal 3.14?",
+                options: [
+                    { text: "int", correct: false },
+                    { text: "float", correct: true },
+                    { text: "double", correct: false },
+                    { text: "char", correct: false }
+                ],
+                explanation: "Floating-point literals without a suffix (like 3.14) are of type 'float' by default in C++."
+            },
+            {
+                id: 5,
+                block: 1,
+                type: "single-choice",
+                points: 5,
+                question: "Which of the following shows correct operator precedence?",
+                options: [
+                    { text: "(+, -, *, /)", correct: false },
+                    { text: "(*, /, %, +, -)", correct: true },
+                    { text: "(+, -, *, /)", correct: false },
+                    { text: "(/, *, +, -)", correct: false }
+                ],
+                explanation: "In C++, multiplication, division, and modulo have higher precedence than addition and subtraction."
+            },
+            {
+                id: 6,
+                block: 1,
+                type: "single-choice",
+                points: 4,
+                question: "What is the purpose of cin in C++?",
+                options: [
+                    { text: "Output data", correct: false },
+                    { text: "Input data", correct: true },
+                    { text: "Declare variables", correct: false },
+                    { text: "Create functions", correct: false }
+                ],
+                explanation: "cin is an input stream used to read data from the user or other input sources."
+            },
+            {
+                id: 7,
+                block: 1,
+                type: "single-choice",
+                points: 4,
+                question: "Which is NOT a valid C++ keyword?",
+                options: [
+                    { text: "void", correct: false },
+                    { text: "class", correct: false },
+                    { text: "function", correct: true },
+                    { text: "return", correct: false }
+                ],
+                explanation: "'function' is not a C++ keyword. To define functions, you use the return type (like void or int), not 'function' keyword."
+            },
+            {
+                id: 8,
+                block: 1,
+                type: "single-choice",
+                points: 5,
+                question: "What does the short-circuit AND (&&) operator do?",
+                options: [
+                    { text: "Evaluates all conditions", correct: false },
+                    { text: "Stops evaluating if first condition is false", correct: true },
+                    { text: "Always returns true", correct: false },
+                    { text: "Stops evaluating if first condition is true", correct: false }
+                ],
+                explanation: "With &&, if the first condition is false, the second condition is not evaluated. This is short-circuit logic."
+            },
+            {
+                id: 9,
+                block: 1,
+                type: "single-choice",
+                points: 5,
+                question: "What is the value of x after: int x = 5; x += 3; ?",
+                options: [
+                    { text: "5", correct: false },
+                    { text: "8", correct: true },
+                    { text: "3", correct: false },
+                    { text: "15", correct: false }
+                ],
+                explanation: "The += operator is a compound assignment: x += 3 is equivalent to x = x + 3, so 5 + 3 = 8."
+            },
+            {
+                id: 10,
+                block: 2,
+                type: "single-choice",
+                points: 4,
+                question: "What is the output of the following code?\nif (5 > 3) cout << 'A';\nelse cout << 'B';",
+                options: [
+                    { text: "A", correct: true },
+                    { text: "B", correct: false },
+                    { text: "AB", correct: false },
+                    { text: "No output", correct: false }
+                ],
+                explanation: "Since 5 > 3 is true, the if block executes and outputs 'A'."
+            },
+            {
+                id: 11,
+                block: 2,
+                type: "single-choice",
+                points: 4,
+                question: "Which loop control statement terminates a loop immediately?",
+                options: [
+                    { text: "continue", correct: false },
+                    { text: "break", correct: true },
+                    { text: "return", correct: false },
+                    { text: "exit", correct: false }
+                ],
+                explanation: "The 'break' statement terminates the nearest enclosing loop. 'continue' skips to the next iteration."
+            },
+            {
+                id: 12,
+                block: 2,
+                type: "single-choice",
+                points: 5,
+                question: "What is the output of this for loop?\nfor(int i = 0; i < 3; i++) cout << i;",
+                options: [
+                    { text: "012", correct: true },
+                    { text: "123", correct: false },
+                    { text: "0123", correct: false },
+                    { text: "1", correct: false }
+                ],
+                explanation: "The loop initializes i to 0, increments after each iteration, and runs while i < 3. So it outputs: 0, 1, 2."
+            },
+            {
+                id: 13,
+                block: 2,
+                type: "multiple-choice",
+                points: 5,
+                question: "Which are valid loop types in C++? (Select all that apply)",
+                options: [
+                    { text: "while loop", correct: true },
+                    { text: "for loop", correct: true },
+                    { text: "do-while loop", correct: true },
+                    { text: "repeat loop", correct: false }
+                ],
+                explanation: "C++ supports while, for, and do-while loops. There is no 'repeat loop' in standard C++."
+            },
+            {
+                id: 14,
+                block: 2,
+                type: "single-choice",
+                points: 4,
+                question: "Which keyword is used to pass a function to another function?",
+                options: [
+                    { text: "pass", correct: false },
+                    { text: "send", correct: false },
+                    { text: "Arguments", correct: true },
+                    { text: "call", correct: false }
+                ],
+                explanation: "Function arguments (parameters) are used to pass data to functions."
+            },
+            {
+                id: 15,
+                block: 2,
+                type: "single-choice",
+                points: 5,
+                question: "What does a recursive function do?",
+                options: [
+                    { text: "Calls another function", correct: false },
+                    { text: "Calls itself", correct: true },
+                    { text: "Loops indefinitely", correct: false },
+                    { text: "Returns multiple values", correct: false }
+                ],
+                explanation: "A recursive function is one that calls itself. It must have a base case to prevent infinite recursion."
+            },
+            {
+                id: 16,
+                block: 2,
+                type: "single-choice",
+                points: 5,
+                question: "Which statement returns a value from a function?",
+                options: [
+                    { text: "send", correct: false },
+                    { text: "output", correct: false },
+                    { text: "return", correct: true },
+                    { text: "print", correct: false }
+                ],
+                explanation: "The 'return' statement is used to exit a function and optionally return a value."
+            },
+            {
+                id: 17,
+                block: 2,
+                type: "single-choice",
+                points: 4,
+                question: "What is the difference between pass by value and pass by reference?",
+                options: [
+                    { text: "No difference", correct: false },
+                    { text: "Pass by value copies the data; pass by reference uses the original", correct: true },
+                    { text: "Pass by reference is faster", correct: false },
+                    { text: "Pass by value is more secure", correct: false }
+                ],
+                explanation: "Pass by value creates a copy of the argument; pass by reference (&) allows the function to modify the original variable."
+            },
+            {
+                id: 18,
+                block: 3,
+                type: "single-choice",
+                points: 4,
+                question: "How do you declare a vector of integers?",
+                options: [
+                    { text: "vector<int> v;", correct: true },
+                    { text: "int[] v;", correct: false },
+                    { text: "int v[10];", correct: false },
+                    { text: "vector v;", correct: false }
+                ],
+                explanation: "Vectors are declared with the syntax: vector<type> name;"
+            },
+            {
+                id: 19,
+                block: 3,
+                type: "single-choice",
+                points: 5,
+                question: "What does a pointer store?",
+                options: [
+                    { text: "A value", correct: false },
+                    { text: "An address of a variable", correct: true },
+                    { text: "A function", correct: false },
+                    { text: "An array", correct: false }
+                ],
+                explanation: "A pointer stores the memory address of another variable, not the value itself."
+            },
+            {
+                id: 20,
+                block: 3,
+                type: "single-choice",
+                points: 4,
+                question: "What operator dereferences a pointer to get the value?",
+                options: [
+                    { text: "&", correct: false },
+                    { text: "*", correct: true },
+                    { text: "->", correct: false },
+                    { text: ".", correct: false }
+                ],
+                explanation: "The * operator dereferences a pointer. For example, if p is a pointer, *p gives the value it points to."
+            },
+            {
+                id: 21,
+                block: 3,
+                type: "single-choice",
+                points: 5,
+                question: "What does the & operator do?",
+                options: [
+                    { text: "Dereferences a pointer", correct: false },
+                    { text: "Gets the address of a variable", correct: true },
+                    { text: "Creates a reference", correct: false },
+                    { text: "Performs bitwise AND", correct: false }
+                ],
+                explanation: "The & operator gets the address of a variable. For example, &x gives the memory address of variable x."
+            },
+            {
+                id: 22,
+                block: 3,
+                type: "single-choice",
+                points: 4,
+                question: "Which keyword creates a dynamic array?",
+                options: [
+                    { text: "malloc", correct: false },
+                    { text: "new", correct: true },
+                    { text: "create", correct: false },
+                    { text: "allocate", correct: false }
+                ],
+                explanation: "The 'new' keyword allocates memory dynamically in C++. Use 'delete' to free the memory."
+            },
+            {
+                id: 23,
+                block: 3,
+                type: "single-choice",
+                points: 5,
+                question: "What is nullptr used for?",
+                options: [
+                    { text: "Represents a zero value", correct: false },
+                    { text: "Represents a null pointer", correct: true },
+                    { text: "Represents an empty array", correct: false },
+                    { text: "Represents false", correct: false }
+                ],
+                explanation: "nullptr is the null pointer constant in C++11 and later, representing a pointer that points to nothing."
+            },
+            {
+                id: 24,
+                block: 3,
+                type: "single-choice",
+                points: 4,
+                question: "How do you access the first element of a vector v?",
+                options: [
+                    { text: "v[0]", correct: true },
+                    { text: "v(0)", correct: false },
+                    { text: "v.first", correct: false },
+                    { text: "v.at(1)", correct: false }
+                ],
+                explanation: "Vectors are zero-indexed, so the first element is accessed with v[0]."
+            },
+            {
+                id: 25,
+                block: 4,
+                type: "single-choice",
+                points: 4,
+                question: "How do you declare a structure in C++?",
+                options: [
+                    { text: "struct Name { };", correct: true },
+                    { text: "structure Name { };", correct: false },
+                    { text: "class Name { };", correct: false },
+                    { text: "define Name { };", correct: false }
+                ],
+                explanation: "Structures are declared using the 'struct' keyword, followed by the structure name and its members."
+            },
+            {
+                id: 26,
+                block: 4,
+                type: "single-choice",
+                points: 5,
+                question: "How do you access a structure member using the dot operator?",
+                options: [
+                    { text: "struct.member", correct: true },
+                    { text: "struct->member", correct: false },
+                    { text: "struct[member]", correct: false },
+                    { text: "struct(member)", correct: false }
+                ],
+                explanation: "The dot operator (.) is used to access members of a structure instance: variable.member"
+            },
+            {
+                id: 27,
+                block: 4,
+                type: "single-choice",
+                points: 5,
+                question: "How do you create a std::string in C++?",
+                options: [
+                    { text: "string str = 'hello';", correct: false },
+                    { text: 'string str = \"hello\";', correct: true },
+                    { text: "char str = 'hello';", correct: false },
+                    { text: "std str = 'hello';", correct: false }
+                ],
+                explanation: "std::string uses double quotes. Single quotes are for individual characters (char type)."
+            },
+            {
+                id: 28,
+                block: 4,
+                type: "single-choice",
+                points: 4,
+                question: "What method returns the length of a std::string?",
+                options: [
+                    { text: "str.size()", correct: true },
+                    { text: "str.length()", correct: false },
+                    { text: "str.count()", correct: false },
+                    { text: "str.len()", correct: false }
+                ],
+                explanation: "Both size() and length() work for std::string, but size() is the most common method."
+            },
+            {
+                id: 29,
+                block: 4,
+                type: "multiple-choice",
+                points: 5,
+                question: "Which are valid string operations in C++? (Select all that apply)",
+                options: [
+                    { text: "Concatenation with +", correct: true },
+                    { text: "Comparison with ==", correct: true },
+                    { text: "Indexing with []", correct: true },
+                    { text: "Division with /", correct: false }
+                ],
+                explanation: "Strings support concatenation (+), comparison (==), and indexing ([]). String division is not a valid operation."
+            },
+            {
+                id: 30,
+                block: 4,
+                type: "single-choice",
+                points: 5,
+                question: "Can you create a vector of structures in C++?",
+                options: [
+                    { text: "No", correct: false },
+                    { text: "Yes, with vector<StructName>", correct: true },
+                    { text: "Only with arrays", correct: false },
+                    { text: "Only with pointers", correct: false }
+                ],
+                explanation: "You can create a vector of any type, including structures: vector<StructName> vec;"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let examStartTime = null;
+        let examEndTime = null;
+        let timerInterval = null;
+        let examSubmitted = false;
+
+        function startExam() {
+            document.getElementById('introSection').style.display = 'none';
+            document.getElementById('questionsContainer').classList.add('active');
+            document.getElementById('buttonsContainer').style.display = 'flex';
+            
+            examStartTime = Date.now();
+            startTimer();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            const duration = 45 * 60; // 45 minutes in seconds
+            let elapsed = 0;
+
+            timerInterval = setInterval(() => {
+                elapsed++;
+                const remaining = duration - elapsed;
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('pausedAlert').classList.add('active');
+                    submitExam();
+                    return;
+                }
+
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                document.getElementById('timer').textContent = 
+                    `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (remaining <= 300) {
+                    document.getElementById('timer').style.background = '#f8d7da';
+                    document.getElementById('timer').style.color = '#721c24';
+                }
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            const question = examQuestions[currentQuestionIndex];
+            let html = `
+                <div class="question-block">Block ${question.block} — ${getBlockName(question.block)}</div>
+                <div class="question-item ${userAnswers[question.id] ? 'answered' : ''}">
+                    <span class="question-type">${question.type.replace('-', ' ').toUpperCase()}</span>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+            `;
+
+            if (question.type === 'multiple-choice') {
+                question.options.forEach((option, index) => {
+                    const isSelected = userAnswers[question.id] && userAnswers[question.id].includes(index);
+                    html += `
+                        <label class="option ${isSelected ? 'selected' : ''}">
+                            <input type="checkbox" name="question${question.id}" value="${index}" 
+                                ${isSelected ? 'checked' : ''} onchange="selectMultipleOption(${question.id}, ${index})">
+                            <span class="option-label">${option.text}</span>
+                        </label>
+                    `;
+                });
+            } else {
+                question.options.forEach((option, index) => {
+                    const isSelected = userAnswers[question.id] === index;
+                    html += `
+                        <label class="option ${isSelected ? 'selected' : ''}">
+                            <input type="radio" name="question${question.id}" value="${index}" 
+                                ${isSelected ? 'checked' : ''} onchange="selectSingleOption(${question.id}, ${index})">
+                            <span class="option-label">${option.text}</span>
+                        </label>
+                    `;
+                });
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('questionsWrapper').innerHTML = html;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            updateButtonStates();
+        }
+
+        function getBlockName(block) {
+            const blocks = {
+                1: "Syntax, Literals, and Operators",
+                2: "Flow Control and Functions",
+                3: "Vectors and Pointers",
+                4: "Structures and Strings"
+            };
+            return blocks[block] || "Unknown Block";
+        }
+
+        function selectSingleOption(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+            renderQuestion();
+        }
+
+        function selectMultipleOption(questionId, optionIndex) {
+            if (!userAnswers[questionId]) {
+                userAnswers[questionId] = [];
+            }
+            
+            const index = userAnswers[questionId].indexOf(optionIndex);
+            if (index > -1) {
+                userAnswers[questionId].splice(index, 1);
+            } else {
+                userAnswers[questionId].push(optionIndex);
+            }
+            
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < examQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentQuestionIndex === examQuestions.length - 1;
+        }
+
+        function submitExam() {
+            if (examSubmitted) return;
+            
+            examSubmitted = true;
+            examEndTime = Date.now();
+            clearInterval(timerInterval);
+
+            let totalPoints = 0;
+            let earnedPoints = 0;
+            let correctCount = 0;
+
+            examQuestions.forEach(question => {
+                totalPoints += question.points;
+                
+                if (question.type === 'multiple-choice') {
+                    const userSelectedOptions = userAnswers[question.id] || [];
+                    const correctOptions = question.options
+                        .map((opt, idx) => opt.correct ? idx : -1)
+                        .filter(idx => idx !== -1);
+                    
+                    const isCorrect = userSelectedOptions.length === correctOptions.length &&
+                        userSelectedOptions.every(idx => correctOptions.includes(idx));
+                    
+                    if (isCorrect) {
+                        earnedPoints += question.points;
+                        correctCount++;
+                    }
+                } else {
+                    const userAnswer = userAnswers[question.id];
+                    if (userAnswer !== undefined && question.options[userAnswer].correct) {
+                        earnedPoints += question.points;
+                        correctCount++;
+                    }
+                }
+            });
+
+            const scorePercent = Math.round((earnedPoints / totalPoints) * 100);
+            const passed = scorePercent >= 70;
+
+            const timeUsed = new Date(examEndTime - examStartTime);
+            const minutes = String(Math.floor((examEndTime - examStartTime) / 60000)).padStart(2, '0');
+            const seconds = String(Math.floor(((examEndTime - examStartTime) % 60000) / 1000)).padStart(2, '0');
+
+            document.getElementById('questionsContainer').classList.remove('active');
+            document.getElementById('buttonsContainer').style.display = 'none';
+            document.getElementById('resultsContainer').classList.add('active');
+            document.getElementById('scorePercent').textContent = scorePercent + '%';
+            document.getElementById('passStatus').textContent = passed ? '✓ PASSED' : '✗ FAILED';
+            document.getElementById('passStatus').className = 'pass-status ' + (passed ? 'passed' : 'failed');
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('pointsEarned').textContent = earnedPoints;
+            document.getElementById('timeUsed').textContent = minutes + ':' + seconds;
+
+            renderReview();
+            window.scrollTo(0, 0);
+        }
+
+        function renderReview() {
+            let reviewHtml = '';
+
+            examQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[question.id];
+                let isCorrect = false;
+
+                if (question.type === 'multiple-choice') {
+                    const userSelectedOptions = userAnswer || [];
+                    const correctOptions = question.options
+                        .map((opt, idx) => opt.correct ? idx : -1)
+                        .filter(idx => idx !== -1);
+                    isCorrect = userSelectedOptions.length === correctOptions.length &&
+                        userSelectedOptions.every(idx => correctOptions.includes(idx));
+                } else {
+                    isCorrect = userAnswer !== undefined && question.options[userAnswer].correct;
+                }
+
+                const correctOptions = question.options
+                    .map((opt, idx) => ({ text: opt.text, correct: opt.correct, index: idx }))
+                    .filter(opt => opt.correct);
+
+                let userAnswerText = 'Not answered';
+                if (userAnswer !== undefined) {
+                    if (question.type === 'multiple-choice') {
+                        userAnswerText = userAnswer.map(idx => question.options[idx].text).join(', ');
+                    } else {
+                        userAnswerText = question.options[userAnswer].text;
+                    }
+                }
+
+                reviewHtml += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="review-item-number">Question ${index + 1} (Block ${question.block}) - ${question.points} points ${isCorrect ? '✓' : '✗'}</div>
+                        <div class="review-item-question">${question.question}</div>
+                        <div class="review-item-answer">
+                            <strong>Your answer:</strong> ${userAnswerText}
+                        </div>
+                        <div class="review-item-answer">
+                            <strong>Correct answer:</strong> ${correctOptions.map(opt => opt.text).join(', ')}
+                        </div>
+                        <div class="explanation ${isCorrect ? 'correct' : 'incorrect'}">
+                            ${question.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('reviewContent').innerHTML = reviewHtml;
+        }
+    </script>
+</body>
+</html>
