@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPE C++ Certified Entry-Level Programmer Simulator</title>
+    <style>
+        :root {
+            --primary: #0055a5;
+            --bg: #f4f7f6;
+            --text: #333;
+            --border: #ccc;
+            --correct: #2e7d32;
+            --incorrect: #c62828;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: var(--primary); }
+        .exam-info {
+            background: #e9f2fa;
+            padding: 20px;
+            border-left: 5px solid var(--primary);
+            margin-bottom: 30px;
+        }
+        .exam-info ul { list-style-type: none; padding: 0; }
+        .exam-info li { margin-bottom: 8px; }
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: #003d7a; }
+        .question-block {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            background: #fafafa;
+            border: 1px solid #eee;
+        }
+        .options label:hover { background: #f0f0f0; }
+        input[type="radio"] { margin-right: 10px; }
+        .hidden { display: none; }
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .pass { color: var(--correct); font-size: 24px; font-weight: bold; }
+        .fail { color: var(--incorrect); font-size: 24px; font-weight: bold; }
+        .review-item {
+            background: #fff0f0;
+            border-left: 5px solid var(--incorrect);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="landing-page">
+        <h1>CPE – C++ Certified Entry-Level Programmer Simulator</h1>
+        
+        <div class="exam-info">
+            <h3>Exam Details</h3>
+            <ul>
+                <li><strong>Exam code:</strong> CPE-20-0x</li>
+                <li><strong>Prerequisites:</strong> None</li>
+                <li><strong>Duration:</strong> 45 minutes</li>
+                <li><strong>Format in this Simulator:</strong> 40 Single-choice questions (pulled from a larger pool)</li>
+                <li><strong>Passing score:</strong> 70%</li>
+            </ul>
+        </div>
+        
+        <p>This exam simulator is divided into four main blocks based on the official syllabus: Syntax/Literals, Flow Control/Functions, Vectors/Pointers, and Structures/Strings.</p>
+        
+        <button class="btn" onclick="startExam()">Start Exam Now</button>
+    </div>
+
+    <div id="exam-container" class="hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>CPE Certification Exam</h2>
+            <div id="timer" style="font-weight: bold; color: var(--primary);">45:00</div>
+        </div>
+        <p><em>Answer all 40 questions below.</em></p>
+        
+        <form id="quiz-form">
+            <div id="questions-area"></div>
+            <button type="button" class="btn" style="margin-top: 20px; width: 100%;" onclick="submitExam()">Check All Answers</button>
+        </form>
+    </div>
+
+    <div id="results-container" class="hidden">
+        <div class="results-header">
+            <h2>Exam Results</h2>
+            <p id="score-display"></p>
+            <p id="pass-fail-msg"></p>
+            <button class="btn" onclick="location.reload()">Retake Exam</button>
+        </div>
+        <div id="review-area"></div>
+    </div>
+</div>
+
+<script>
+    // --- QUESTION POOL (42 Questions covering all 4 Blocks) ---
+    // The simulator will randomly select 40 questions from this pool each time.
+    const masterPool = [
+        // Block 1: Syntax, Literals, Operators
+        {
+            q: "Which of the following is a perfectly valid C++ identifier?",
+            opts: ["1stVariable", "_myVar", "int", "my-var"],
+            ans: 1,
+            exp: "Identifiers can start with a letter or underscore, but not a number. 'int' is a keyword, and '-' is not allowed."
+        },
+        {
+            q: "What is the standard entry point of a C++ program?",
+            opts: ["void start()", "int main()", "public static void main()", "int Main()"],
+            ans: 1,
+            exp: "The execution of all C++ programs begins with the main() function, which must return an int."
+        },
+        {
+            q: "What is the result of '10 % 3' in C++?",
+            opts: ["3.33", "3", "1", "0"],
+            ans: 2,
+            exp: "The modulo operator (%) returns the remainder of integer division. 10 divided by 3 is 3 with a remainder of 1."
+        },
+        {
+            q: "Which operator is used for logical AND?",
+            opts: ["&", "&&", "||", "AND"],
+            ans: 1,
+            exp: "&& is the logical AND operator. & is the bitwise AND operator."
+        },
+        {
+            q: "In the expression 'true || false && false', what is evaluated first due to precedence?",
+            opts: ["true || false", "false && false", "Left to right evaluation", "They are evaluated simultaneously"],
+            ans: 1,
+            exp: "Logical AND (&&) has higher precedence than logical OR (||)."
+        },
+        {
+            q: "Which header file is required to use the 'setw' stream manipulator?",
+            opts: ["<iostream>", "<iomanip>", "<string>", "<math.h>"],
+            ans: 1,
+            exp: "<iomanip> stands for input/output manipulation and contains parameterized manipulators like setw."
+        },
+        {
+            q: "Which of the following is a valid hexadecimal literal?",
+            opts: ["0x1A", "1A", "x1A", "hex1A"],
+            ans: 0,
+            exp: "Hexadecimal literals in C++ must be prefixed with '0x' or '0X'."
+        },
+        {
+            q: "What does short-circuit evaluation mean in the context of 'A && B'?",
+            opts: ["B is always evaluated first", "If A is true, B is not evaluated", "If A is false, B is not evaluated", "Both A and B are compiled into a shorter circuit"],
+            ans: 2,
+            exp: "In an && expression, if the left operand evaluates to false, the overall expression must be false, so the right operand is skipped."
+        },
+        {
+            q: "What is the default standard stream used for unbuffered error output?",
+            opts: ["cin", "cout", "cerr", "clog"],
+            ans: 2,
+            exp: "cerr is the standard error stream and is unbuffered, meaning errors appear immediately."
+        },
+        {
+            q: "Which operator has right-to-left associativity?",
+            opts: ["Addition (+)", "Assignment (=)", "Multiplication (*)", "Modulo (%)"],
+            ans: 1,
+            exp: "The assignment operator evaluates from right to left (e.g., a = b = c; assigns c to b, then b to a)."
+        },
+        {
+            q: "How many bytes does the 'char' data type typically occupy in C++?",
+            opts: ["1 byte", "2 bytes", "4 bytes", "Depends entirely on the compiler"],
+            ans: 0,
+            exp: "The standard guarantees that sizeof(char) is always exactly 1."
+        },
+        
+        // Block 2: Flow Control and Functions
+        {
+            q: "Which loop is guaranteed to execute its body at least once?",
+            opts: ["for loop", "while loop", "do-while loop", "foreach loop"],
+            ans: 2,
+            exp: "A do-while loop evaluates its condition after executing the body, guaranteeing at least one execution."
+        },
+        {
+            q: "What keyword is used to skip the rest of the current loop iteration and move to the next one?",
+            opts: ["break", "continue", "skip", "next"],
+            ans: 1,
+            exp: "'continue' jumps back to the condition evaluation (or increment step in a for loop), skipping the remaining code in the block."
+        },
+        {
+            q: "In a switch statement, what is the purpose of the 'default' case?",
+            opts: ["It acts as an error handler", "It executes if no case matches the switch expression", "It is required in every switch statement", "It resets the switch variable"],
+            ans: 1,
+            exp: "The 'default' case is the fallback block executed if no explicit 'case' value matches the evaluated expression."
+        },
+        {
+            q: "Which of the following correctly defines a function that returns nothing?",
+            opts: ["int func()", "null func()", "void func()", "empty func()"],
+            ans: 2,
+            exp: "The 'void' return type specifies that the function does not return a value."
+        },
+        {
+            q: "What happens if a function requires an argument to be passed by reference, but you pass a literal like '5'?",
+            opts: ["It works perfectly", "Compilation error", "Runtime exception", "The literal is converted to a pointer"],
+            ans: 1,
+            exp: "You cannot pass an rvalue (like a literal number) to a non-const lvalue reference parameter. It causes a compilation error."
+        },
+        {
+            q: "Which of the following is true about recursive functions?",
+            opts: ["They must contain a loop", "They must have a base case to prevent infinite recursion", "They cannot return values", "They are always faster than iterative solutions"],
+            ans: 1,
+            exp: "A base case provides an exit condition for the recursion, preventing a stack overflow."
+        },
+        {
+            q: "What is the primary drawback of using the 'goto' statement?",
+            opts: ["It causes syntax errors", "It slows down execution time", "It makes code harder to read and maintain (spaghetti code)", "It cannot jump forward in code"],
+            ans: 2,
+            exp: "goto bypasses normal flow control mechanisms, making the logic difficult to trace."
+        },
+        {
+            q: "How do you pass an argument 'by value' in a function signature?",
+            opts: ["void myFunc(int x)", "void myFunc(int &x)", "void myFunc(int *x)", "void myFunc(int &&x)"],
+            ans: 0,
+            exp: "Passing by value means a copy of the variable is made. No ampersand (&) or asterisk (*) is used."
+        },
+        {
+            q: "Can a switch statement evaluate a std::string variable?",
+            opts: ["Yes", "No"],
+            ans: 1,
+            exp: "In C++, switch statements can only evaluate integral or enumeration types. Strings are not allowed."
+        },
+        {
+            q: "If an 'if' statement is followed by multiple lines of code without curly braces {}, what happens?",
+            opts: ["All lines are executed conditionally", "Only the first line is executed conditionally", "A compilation error occurs", "The program crashes"],
+            ans: 1,
+            exp: "Without braces, only the single statement immediately following the 'if' condition is considered part of the conditional block."
+        },
+
+        // Block 3: Vectors and Pointers
+        {
+            q: "Which header file is needed to use the vector container?",
+            opts: ["<array>", "<list>", "<vector>", "<memory>"],
+            ans: 2,
+            exp: "The std::vector container is defined in the <vector> header."
+        },
+        {
+            q: "How do you correctly declare a vector of integers?",
+            opts: ["vector int v;", "std::vector<int> v;", "vector[int] v;", "int vector v;"],
+            ans: 1,
+            exp: "Vectors are template classes. The type is specified inside angle brackets: std::vector<Type>."
+        },
+        {
+            q: "What does the std::vector::data() method return?",
+            opts: ["The number of elements", "A direct pointer to the underlying memory array", "The first element by value", "A boolean indicating if it is empty"],
+            ans: 1,
+            exp: "The data() method returns a pointer to the first element of the contiguous memory array used internally by the vector."
+        },
+        {
+            q: "What operator is used to get the memory address of a variable?",
+            opts: ["*", "&", "->", "::"],
+            ans: 1,
+            exp: "The ampersand (&) acts as the address-of operator when placed before a variable name."
+        },
+        {
+            q: "If 'ptr' is a pointer, how do you access the value stored at its memory address?",
+            opts: ["&ptr", "ptr->value", "*ptr", "ptr()"],
+            ans: 2,
+            exp: "The asterisk (*) is the dereference operator, used to access the value at the pointer's address."
+        },
+        {
+            q: "What keyword was introduced in C++11 to represent a null pointer?",
+            opts: ["NULL", "0", "null", "nullptr"],
+            ans: 3,
+            exp: "nullptr is the type-safe null pointer literal introduced in C++11 to replace the macro NULL."
+        },
+        {
+            q: "Which cast should be used to safely convert pointers within a class hierarchy (polymorphic types) at runtime?",
+            opts: ["static_cast", "dynamic_cast", "reinterpret_cast", "const_cast"],
+            ans: 1,
+            exp: "dynamic_cast performs a runtime check to ensure the cast is safe, specifically for polymorphic base-to-derived conversions."
+        },
+        {
+            q: "When you allocate memory for an array using 'new int[10]', how MUST you free it?",
+            opts: ["delete array;", "delete[] array;", "free(array);", "It is freed automatically"],
+            ans: 1,
+            exp: "Memory allocated with new[] must be deallocated using delete[] to ensure all destructors are called and memory is properly freed."
+        },
+        {
+            q: "What is a memory leak?",
+            opts: ["Accessing memory outside an array's bounds", "Failing to delete dynamically allocated memory", "Using a pointer after it has been deleted", "A hardware failure in RAM"],
+            ans: 1,
+            exp: "A memory leak occurs when dynamically allocated memory is no longer needed but is not released using delete."
+        },
+        {
+            q: "Which of the following initializes a 2D array?",
+            opts: ["int arr[2,2];", "int arr[2][2] = {{1,2},{3,4}};", "int arr(2)(2);", "array<int, 2x2> arr;"],
+            ans: 1,
+            exp: "In C++, multidimensional arrays use separate brackets for each dimension, and can be initialized with nested braces."
+        },
+
+        // Block 4: Structures and Strings
+        {
+            q: "What is the default access modifier for members of a 'struct' in C++?",
+            opts: ["private", "public", "protected", "internal"],
+            ans: 1,
+            exp: "Unlike classes (which default to private), struct members are public by default."
+        },
+        {
+            q: "Which operator is used to access a member of a struct instance?",
+            opts: ["->", "::", ".", "*"],
+            ans: 2,
+            exp: "The dot (.) operator is used to access members of a struct or class object directly."
+        },
+        {
+            q: "How do you correctly declare a string in C++?",
+            opts: ["String s = \"hello\";", "std::string s = \"hello\";", "char s = \"hello\";", "string s = 'hello';"],
+            ans: 1,
+            exp: "The string class is in the std namespace (std::string). Double quotes are used for string literals."
+        },
+        {
+            q: "What does the '+' operator do when used with std::string?",
+            opts: ["Adds the ASCII values of the strings", "Throws a compiler error", "Concatenates the strings", "Returns true if strings are identical"],
+            ans: 2,
+            exp: "The + operator is overloaded for std::string to perform concatenation (joining strings together)."
+        },
+        {
+            q: "Which method is used to find the number of characters in a std::string?",
+            opts: ["s.size()", "s.length()", "Both A and B", "s.count()"],
+            ans: 2,
+            exp: "For std::string, both length() and size() are synonyms and return the exact same value (number of bytes/characters)."
+        },
+        {
+            q: "If you have a struct pointer 'p', how do you access a member 'x'?",
+            opts: ["p.x", "p->x", "p::x", "p*x"],
+            ans: 1,
+            exp: "The arrow operator (->) is used to access members through a pointer. It is equivalent to (*p).x."
+        },
+        {
+            q: "Can a struct contain another struct as a member?",
+            opts: ["Yes", "No"],
+            ans: 0,
+            exp: "Yes, structs can be nested. A struct can have fields that are instances of other defined structs."
+        },
+        {
+            q: "What is the result of 'std::string s1 = \"Apple\"; std::string s2 = \"Banana\"; bool b = (s1 < s2);'?",
+            opts: ["b is true", "b is false", "Compilation error", "Runtime error"],
+            ans: 0,
+            exp: "String comparison operators evaluate lexicographically (alphabetically). 'A' comes before 'B', so s1 is less than s2."
+        },
+        {
+            q: "Does std::string automatically manage its own memory allocation?",
+            opts: ["Yes", "No"],
+            ans: 0,
+            exp: "Yes, std::string automatically resizes and manages the heap memory required to store its characters."
+        },
+        {
+            q: "If you want a vector to store instances of 'struct Point', what is the syntax?",
+            opts: ["std::vector<Point> v;", "std::vector<struct> Point v;", "vector[Point] v;", "Point::vector v;"],
+            ans: 0,
+            exp: "You pass the struct name (Point) as the template type argument: std::vector<Point>."
+        },
+      // --- BLOCK 1: Syntax, Literals, and Operators (Expansion) ---
+        {
+            q: "Which of the following is an octal literal in C++?",
+            opts: ["0x75", "075", "75", "O75"],
+            ans: 1,
+            exp: "In C++, an integer literal that begins with a zero (0) and contains only digits 0-7 is interpreted as an octal (base-8) value."
+        },
+        {
+            q: "What is the result of the bitwise XOR operator '^' when comparing two identical bits (e.g., 1 ^ 1)?",
+            opts: ["1", "0", "-1", "Depends on the compiler"],
+            ans: 1,
+            exp: "The bitwise XOR operator returns 1 if the bits are different, and 0 if they are the same."
+        },
+        {
+            q: "If 'int a = 5;', what is the value of 'a' after the expression 'a++ + ++a' is evaluated?",
+            opts: ["10", "11", "12", "Undefined behavior"],
+            ans: 3,
+            exp: "Modifying a variable multiple times within the same expression without an intervening sequence point results in undefined behavior in C++."
+        },
+        {
+            q: "Which stream is generally used for buffered standard output?",
+            opts: ["cin", "cerr", "clog", "cout"],
+            ans: 3,
+            exp: "std::cout is the standard output stream and is buffered, meaning output is stored in memory before being flushed to the console."
+        },
+        {
+            q: "What does the 'sizeof' operator return?",
+            opts: ["The number of characters in a string", "The size in bytes of a variable or data type", "The maximum value a type can hold", "The memory address of a variable"],
+            ans: 1,
+            exp: "sizeof is a compile-time operator that yields the size, in bytes, of its operand."
+        },
+        {
+            q: "Which C++ keyword is used to declare a constant variable that cannot be modified after initialization?",
+            opts: ["final", "static", "const", "readonly"],
+            ans: 2,
+            exp: "The 'const' keyword specifies that a variable's value is constant and cannot be modified after it is created."
+        },
+        {
+            q: "What is the associativity of the assignment operator '='?",
+            opts: ["Left to right", "Right to left", "It does not have associativity", "Depends on the operands"],
+            ans: 1,
+            exp: "Assignment evaluates from right to left, which allows chaining like 'a = b = c = 5;'."
+        },
+        {
+            q: "Evaluate: 'bool res = (5 > 3) ? true : false;'. What operator is being used?",
+            opts: ["Logical operator", "Relational operator", "Ternary conditional operator", "Bitwise operator"],
+            ans: 2,
+            exp: "The '?:' syntax is the ternary conditional operator, which evaluates a condition and returns one of two values."
+        },
+        {
+            q: "Which of the following is NOT a fundamental C++ data type?",
+            opts: ["float", "bool", "std::string", "double"],
+            ans: 2,
+            exp: "std::string is a standard library class, not a built-in fundamental primitive type like float, bool, or double."
+        },
+        {
+            q: "What is the correct syntax for a single-line comment in C++?",
+            opts: ["/* comment */", "// comment", "# comment", ""],
+            ans: 1,
+            exp: "The double forward slash '//' initiates a single-line comment. '/* */' is for multi-line comments."
+        },
+        {
+            q: "Which manipulator is used to insert a newline character and flush the output stream?",
+            opts: ["\\n", "std::flush", "std::endl", "std::newline"],
+            ans: 2,
+            exp: "std::endl outputs a newline '\\n' and additionally flushes the stream buffer."
+        },
+        {
+            q: "What is the value of 'a' after 'int a = 10; a %= 3;'?",
+            opts: ["3.33", "3", "1", "10"],
+            ans: 2,
+            exp: "a %= 3 is shorthand for a = a % 3. 10 modulo 3 is 1."
+        },
+        {
+            q: "Which bitwise operator performs a right shift?",
+            opts: ["<<", ">>", ">>>", "->"],
+            ans: 1,
+            exp: "The '>>' operator shifts the bits of the left operand to the right by the number of positions specified by the right operand."
+        },
+        {
+            q: "What does standard input (std::cin) use to extract data?",
+            opts: ["The insertion operator (<<)", "The extraction operator (>>)", "The assignment operator (=)", "The get() method only"],
+            ans: 1,
+            exp: "std::cin uses the extraction operator (>>) to extract formatted data from the input stream."
+        },
+        {
+            q: "Can you change the value of a literal directly, e.g., '5 = x;'?",
+            opts: ["Yes", "No, literals are rvalues", "Only if it is a string literal", "Depends on the compiler"],
+            ans: 1,
+            exp: "Literals are rvalues (values that exist temporarily on the right side of an assignment) and cannot have values assigned to them."
+        },
+
+        // --- BLOCK 2: Flow Control and Functions (Expansion) ---
+        {
+            q: "What happens if a 'switch' statement's cases do not contain 'break' statements?",
+            opts: ["Compilation error", "The switch statement exits automatically after the first match", "Execution 'falls through' to the subsequent cases until a break is hit", "The default case executes immediately"],
+            ans: 2,
+            exp: "Without 'break', C++ exhibits 'fall-through' behavior, executing all subsequent case blocks regardless of whether they match."
+        },
+        {
+            q: "How can you specify a default value for a function parameter?",
+            opts: ["void func(int x default 5)", "void func(int x : 5)", "void func(int x = 5)", "You cannot specify default parameters in C++"],
+            ans: 2,
+            exp: "Default arguments are specified using the assignment operator '=' in the function declaration."
+        },
+        {
+            q: "Which loop is best suited when the number of iterations is known beforehand?",
+            opts: ["while loop", "do-while loop", "for loop", "infinite loop"],
+            ans: 2,
+            exp: "The 'for' loop gathers initialization, condition, and increment in one line, making it ideal for a known number of iterations."
+        },
+        {
+            q: "What keyword requests the compiler to insert a function's code directly at the point of call to save overhead?",
+            opts: ["macro", "inline", "static", "fast"],
+            ans: 1,
+            exp: "The 'inline' keyword is a hint to the compiler to replace the function call with the actual function code to improve performance."
+        },
+        {
+            q: "Can a function in C++ return an array directly by value?",
+            opts: ["Yes, using 'return array;'", "No, C++ does not allow returning arrays by value", "Only if the array is dynamically allocated", "Only if the array size is less than 10"],
+            ans: 1,
+            exp: "Standard C-style arrays cannot be returned by value. You must return a pointer, wrap it in a struct, or use std::array / std::vector."
+        },
+        {
+            q: "What is the output of 'if (0)' in C++?",
+            opts: ["Evaluates to true", "Evaluates to false", "Compilation error", "Runtime exception"],
+            ans: 1,
+            exp: "In C++, the integer value 0 evaluates to boolean false. Any non-zero value evaluates to true."
+        },
+        {
+            q: "What error occurs when a recursive function lacks a proper base case?",
+            opts: ["Syntax error", "Divide by zero error", "Stack overflow", "Heap fragmentation"],
+            ans: 2,
+            exp: "Without a base case, recursion continues infinitely, exhausting the call stack memory and causing a stack overflow crash."
+        },
+        {
+            q: "Which of the following is function overloading?",
+            opts: ["Functions with the same name but different namespaces", "Functions with the same name but different return types only", "Functions with the same name but different parameter lists", "Functions overriding a base class method"],
+            ans: 2,
+            exp: "Function overloading occurs when multiple functions share the same name but have different parameters (type, number, or order)."
+        },
+        {
+            q: "Is it valid to declare a variable inside the initialization statement of a 'for' loop?",
+            opts: ["Yes, and its scope is limited to the loop", "Yes, and its scope extends outside the loop", "No, variables must be declared before the loop", "Only in C++20 and later"],
+            ans: 0,
+            exp: "Yes, variables declared in the initialization step (e.g., for(int i=0;)) are locally scoped strictly to that for loop."
+        },
+        {
+            q: "When passing an argument to a function, what does 'pass by reference' do?",
+            opts: ["Passes a copy of the argument's value", "Passes the actual variable, allowing the function to modify it", "Passes a read-only copy", "Converts the variable to a pointer"],
+            ans: 1,
+            exp: "Passing by reference (using &) binds the parameter directly to the original variable, meaning changes affect the original."
+        },
+        {
+            q: "What is a labeled statement in C++ used for?",
+            opts: ["Creating variables", "Serving as a target for a 'goto' statement", "Defining a function", "Importing libraries"],
+            ans: 1,
+            exp: "Labeled statements (e.g., 'myLabel:') are used exclusively as targets for the 'goto' control statement."
+        },
+        {
+            q: "Which of the following creates an infinite loop?",
+            opts: ["for(int i=0; i<10; i++) {}", "while(false) {}", "for(;;) {}", "do {} while(0);"],
+            ans: 2,
+            exp: "A 'for' loop with empty expressions 'for(;;)' evaluates its condition as true by default, looping infinitely."
+        },
+        {
+            q: "What must match when defining a function that was previously declared in a header?",
+            opts: ["Only the function name", "The return type and parameter list", "The parameter names", "The default argument values"],
+            ans: 1,
+            exp: "The signature (return type, name, and parameter types) must match exactly. Parameter names can differ."
+        },
+        {
+            q: "Can a function return a reference to a local variable?",
+            opts: ["Yes, it is perfectly safe", "Yes, but it causes a dangling reference (undefined behavior)", "No, it causes a compilation error", "Only if the variable is an integer"],
+            ans: 1,
+            exp: "Returning a reference to a local variable is dangerous because the local variable is destroyed when the function ends, leaving a dangling reference."
+        },
+        {
+            q: "What happens when 'return;' is executed in a void function?",
+            opts: ["It returns a zero", "It exits the function immediately", "It throws an error", "It skips to the next iteration"],
+            ans: 1,
+            exp: "In a void function, 'return;' simply terminates the function execution and returns control to the caller."
+        },
+
+        // --- BLOCK 3: Vectors and Pointers (Expansion) ---
+        {
+            q: "Which std::vector method is used to add an element to the end of the vector?",
+            opts: ["push_back()", "append()", "add()", "insert_back()"],
+            ans: 0,
+            exp: "push_back() places a new element at the end of the vector, dynamically resizing it if necessary."
+        },
+        {
+            q: "Which of the following declares a pointer to an integer?",
+            opts: ["int &ptr;", "int ptr;", "int *ptr;", "pointer<int> ptr;"],
+            ans: 2,
+            exp: "The asterisk (*) denotes a pointer type when used in a declaration. 'int *ptr;' declares ptr as a pointer to an integer."
+        },
+        {
+            q: "If 'int arr[5];', what does the variable name 'arr' represent when used alone in an expression?",
+            opts: ["The entire array by value", "A pointer to the first element of the array", "The size of the array", "The last element of the array"],
+            ans: 1,
+            exp: "An array name decays into a pointer to its first element (i.e., &arr[0]) in most expressions."
+        },
+        {
+            q: "What is pointer arithmetic?",
+            opts: ["Multiplying two pointers together", "Adding/subtracting integers to/from pointers to traverse memory", "Changing a float pointer to an int pointer", "Dividing pointers"],
+            ans: 1,
+            exp: "Pointer arithmetic (e.g., ptr + 1) increments the memory address by the size of the data type the pointer points to."
+        },
+        {
+            q: "What does the std::vector::capacity() method return?",
+            opts: ["The number of elements currently stored", "The maximum possible size of the vector before running out of RAM", "The number of elements the vector can currently hold before needing to reallocate memory", "The size of the vector in bytes"],
+            ans: 2,
+            exp: "capacity() is the size of the allocated storage space currently assigned to the vector, which is often larger than size()."
+        },
+        {
+            q: "How do you free memory that was allocated with 'new int;'?",
+            opts: ["delete[] ptr;", "free(ptr);", "delete ptr;", "remove ptr;"],
+            ans: 2,
+            exp: "Single objects allocated with 'new' must be freed using 'delete'. Using 'delete[]' is for arrays."
+        },
+        {
+            q: "What is a 'dangling pointer'?",
+            opts: ["A pointer pointing to a null address", "A pointer that has not been initialized", "A pointer that still points to a memory location after it has been deleted", "A pointer to a function"],
+            ans: 2,
+            exp: "When memory is freed, any pointer still holding that memory address becomes 'dangling' and accessing it causes undefined behavior."
+        },
+        {
+            q: "What is the difference between 'const int* p' and 'int* const p'?",
+            opts: ["There is no difference", "The first is a pointer to a constant int; the second is a constant pointer to an int", "The first is a constant pointer; the second is a pointer to a constant", "Both are invalid syntax"],
+            ans: 1,
+            exp: "const int* means the integer value cannot be changed. int* const means the pointer address cannot be changed."
+        },
+        {
+            q: "Which std::vector method removes the last element?",
+            opts: ["remove_last()", "pop_back()", "erase_end()", "delete_back()"],
+            ans: 1,
+            exp: "pop_back() removes the last element in the vector, reducing the container size by one."
+        },
+        {
+            q: "What is the purpose of 'static_cast' in C++?",
+            opts: ["To perform safe, compile-time type conversions (like float to int)", "To cast away 'const' qualifiers", "To convert pointers between unrelated classes safely at runtime", "To allocate static memory"],
+            ans: 0,
+            exp: "static_cast is used for standard, well-defined type conversions checked at compile time."
+        },
+        {
+            q: "How can you clear all elements from a std::vector?",
+            opts: ["v.empty()", "v.clear()", "v.erase()", "v.delete_all()"],
+            ans: 1,
+            exp: "The clear() method removes all elements from the vector, leaving it with a size of 0."
+        },
+        {
+            q: "Can you assign the address of a float variable to an int pointer?",
+            opts: ["Yes, C++ does this automatically", "No, pointers are strongly typed", "Yes, but only using static_cast", "Yes, but the data is lost"],
+            ans: 1,
+            exp: "Pointers are strongly typed. You cannot directly assign a float* to an int* without explicitly forcing it with reinterpret_cast (which is dangerous)."
+        },
+        {
+            q: "If 'int** p;', what is 'p'?",
+            opts: ["A 2D array", "A pointer to a pointer to an int", "An invalid declaration", "A reference pointer"],
+            ans: 1,
+            exp: "Multiple asterisks denote multiple levels of indirection. 'p' points to a memory address that holds another pointer to an integer."
+        },
+        {
+            q: "What happens if you access a vector element using the [] operator out of bounds (e.g., v[100] on a size 5 vector)?",
+            opts: ["It throws a std::out_of_range exception", "It returns 0", "Undefined behavior, it does not perform bounds checking", "It resizes the vector automatically"],
+            ans: 2,
+            exp: "The overloaded [] operator does NOT check bounds for performance reasons. Use the at() method if you want bounds checking."
+        },
+        {
+            q: "Does an array explicitly store its own size in C++?",
+            opts: ["Yes, in an invisible header", "No, arrays do not track their own length", "Yes, accessible via arr.length", "Yes, but only for character arrays"],
+            ans: 1,
+            exp: "Raw C++ arrays do not store their size. Once decayed to a pointer, size information is entirely lost."
+        },
+
+        // --- BLOCK 4: Structures and Strings (Expansion) ---
+        {
+            q: "Which of the following correctly defines a struct named 'Point'?",
+            opts: ["struct Point { int x; int y; }", "struct Point { int x; int y; };", "struct { int x; int y; } Point;", "Point struct { int x; int y; };"],
+            ans: 1,
+            exp: "A struct definition must end with a semicolon after the closing brace."
+        },
+        {
+            q: "What method extracts a portion of a std::string?",
+            opts: ["slice()", "substring()", "substr()", "cut()"],
+            ans: 2,
+            exp: "The substr(pos, len) method returns a newly constructed string object with its value initialized to a copy of a substring."
+        },
+        {
+            q: "If 'std::string s = \"Hello\";', what does 's.c_str()' return?",
+            opts: ["A reference to the first character", "A const char* pointer to a null-terminated C-style string", "The length of the string", "A new std::string"],
+            ans: 1,
+            exp: "c_str() returns a pointer to an array that contains a null-terminated sequence of characters representing the current value of the string object."
+        },
+        {
+            q: "How do you find the position of a character 'a' in a std::string 's'?",
+            opts: ["s.search('a')", "s.find('a')", "s.indexOf('a')", "s.locate('a')"],
+            ans: 1,
+            exp: "The find() method searches the string for the first occurrence of the sequence specified by its arguments."
+        },
+        {
+            q: "What value does std::string::find() return if the character is NOT found?",
+            opts: ["-1", "0", "std::string::npos", "false"],
+            ans: 2,
+            exp: "If find() fails, it returns std::string::npos, which represents the maximum possible value for an element of type size_t."
+        },
+        {
+            q: "Can you use the relational operator '==' to compare two std::string objects for equality?",
+            opts: ["Yes", "No, it compares their memory addresses", "Only if they are the exact same length", "No, you must use strcmp()"],
+            ans: 0,
+            exp: "std::string overloads the '==' operator to perform a character-by-character value comparison."
+        },
+        {
+            q: "Which std::string method is used to insert a string into another string at a specific position?",
+            opts: ["add()", "insert()", "put()", "splice()"],
+            ans: 1,
+            exp: "The insert(pos, str) method inserts the contents of 'str' right before the character indicated by 'pos'."
+        },
+        {
+            q: "How can you append text to an existing std::string object?",
+            opts: ["Using the + operator", "Using the append() method", "Using the += operator", "All of the above"],
+            ans: 3,
+            exp: "C++ allows string concatenation using +, +=, or the append() method."
+        },
+        {
+            q: "Is padding applied to structs by the compiler?",
+            opts: ["No, structs are always packed tightly", "Yes, for memory alignment and CPU optimization", "Only if you use the 'pad' keyword", "Only on 32-bit systems"],
+            ans: 1,
+            exp: "Compilers often insert invisible 'padding' bytes between struct members to align them in memory for faster CPU access."
+        },
+        {
+            q: "What is the output of 'std::string s; cout << s.empty();'?",
+            opts: ["0", "1", "false", "Compilation error"],
+            ans: 1,
+            exp: "The default constructor for std::string creates an empty string. The empty() method returns true (1 when printed)."
+        },
+        {
+            q: "If 'struct Box { int w, h; };' exists, how do you initialize it uniformly?",
+            opts: ["Box b = {10, 20};", "Box b(10, 20);", "Box b = new Box(10, 20);", "Both A and B (in C++11 and later)"],
+            ans: 3,
+            exp: "C++11 introduced uniform initialization. Both brace initialization {10, 20} and constructor-like syntax are valid for simple aggregate structs."
+        },
+        {
+            q: "How do you access the 'age' member of a struct instance named 'person' that is stored in an array 'people' at index 0?",
+            opts: ["people.age[0]", "people[0].age", "people->age[0]", "people[0]->age"],
+            ans: 1,
+            exp: "You first index into the array to get the struct instance (people[0]), then use the dot operator to access the member (.age)."
+        },
+        {
+            q: "Does std::string handle character encodings like UTF-8 natively?",
+            opts: ["Yes, fully", "No, it treats data merely as a sequence of bytes (chars)", "Yes, but only in C++20", "It depends on the IDE"],
+            ans: 1,
+            exp: "std::string is essentially a container for chars (bytes). It does not natively understand multi-byte Unicode characters (though it can store UTF-8 byte sequences)."
+        },
+        {
+            q: "What is a 'C-style' string?",
+            opts: ["A std::string object", "An array of characters terminated by a null character '\\0'", "A string stored in read-only memory", "A string literal declared with single quotes"],
+            ans: 1,
+            exp: "Before std::string, C++ inherited C-style strings, which are simply contiguous arrays of characters ending with a null byte '\\0'."
+        },
+        {
+            q: "If you assign one struct object to another (e.g., 'box1 = box2;'), what happens?",
+            opts: ["Only the pointers are copied", "A shallow, member-wise copy is performed", "A compilation error occurs", "box1 becomes a reference to box2"],
+            ans: 1,
+            exp: "By default, the assignment operator for structs performs a shallow copy of all member variables from the source to the destination."
+        }
+    ];
+
+    let currentExamQuestions = [];
+    let interval;
+    const TOTAL_TIME_SEC = 45 * 60; // 45 minutes
+    let timeRemaining = TOTAL_TIME_SEC;
+
+    function shuffleArray(array) {
+        let curId = array.length;
+        while (0 !== curId) {
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    function startExam() {
+        document.getElementById('landing-page').classList.add('hidden');
+        document.getElementById('exam-container').classList.remove('hidden');
+        
+        // Shuffle pool and pick 40
+        let shuffled = shuffleArray([...masterPool]);
+        currentExamQuestions = shuffled.slice(0, 40);
+        
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const area = document.getElementById('questions-area');
+        area.innerHTML = '';
+        
+        currentExamQuestions.forEach((q, index) => {
+            let qBlock = document.createElement('div');
+            qBlock.className = 'question-block';
+            
+            let qTitle = document.createElement('h3');
+            qTitle.innerText = `Question ${index + 1} of 40`;
+            qBlock.appendChild(qTitle);
+            
+            let qText = document.createElement('p');
+            qText.innerText = q.q;
+            qBlock.appendChild(qText);
+            
+            let optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+            
+            q.opts.forEach((optText, optIndex) => {
+                let label = document.createElement('label');
+                let radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = optIndex;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(optText));
+                optsDiv.appendChild(label);
+            });
+            
+            qBlock.appendChild(optsDiv);
+            area.appendChild(qBlock);
+        });
+    }
+
+    function startTimer() {
+        interval = setInterval(() => {
+            timeRemaining--;
+            let m = Math.floor(timeRemaining / 60);
+            let s = timeRemaining % 60;
+            document.getElementById('timer').innerText = 
+                (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+                
+            if (timeRemaining <= 0) {
+                clearInterval(interval);
+                alert("Time is up! Submitting exam automatically.");
+                evaluateExam();
+            }
+        }, 1000);
+    }
+
+    function submitExam() {
+        if(confirm("Are you sure you want to submit and check your answers?")) {
+            clearInterval(interval);
+            evaluateExam();
+        }
+    }
+
+    function evaluateExam() {
+        document.getElementById('exam-container').classList.add('hidden');
+        document.getElementById('results-container').classList.remove('hidden');
+        
+        let score = 0;
+        let wrongAnswers = [];
+        const form = document.forms['quiz-form'];
+        
+        currentExamQuestions.forEach((q, index) => {
+            let selected = form.elements[`q${index}`].value;
+            if (selected === "") {
+                // Not answered
+                wrongAnswers.push({
+                    question: q.q,
+                    userAnswer: "No answer selected",
+                    correctAnswer: q.opts[q.ans],
+                    explanation: q.exp,
+                    qNum: index + 1
+                });
+            } else if (parseInt(selected) === q.ans) {
+                score++;
+            } else {
+                // Wrong answer
+                wrongAnswers.push({
+                    question: q.q,
+                    userAnswer: q.opts[parseInt(selected)],
+                    correctAnswer: q.opts[q.ans],
+                    explanation: q.exp,
+                    qNum: index + 1
+                });
+            }
+        });
+        
+        let percentage = Math.round((score / 40) * 100);
+        let passMsg = document.getElementById('pass-fail-msg');
+        let scoreDisplay = document.getElementById('score-display');
+        
+        scoreDisplay.innerText = `You scored ${score} out of 40 (${percentage}%).`;
+        
+        if (percentage >= 70) {
+            passMsg.innerText = "Status: PASSED!";
+            passMsg.className = "pass";
+        } else {
+            passMsg.innerText = "Status: FAILED.";
+            passMsg.className = "fail";
+        }
+        
+        renderReview(wrongAnswers);
+    }
+
+    function renderReview(wrongAnswers) {
+        const reviewArea = document.getElementById('review-area');
+        reviewArea.innerHTML = '<h3>Review Incorrect Answers</h3>';
+        
+        if (wrongAnswers.length === 0) {
+            reviewArea.innerHTML += '<p>Perfect score! You got nothing wrong.</p>';
+            return;
+        }
+        
+        wrongAnswers.forEach(item => {
+            let div = document.createElement('div');
+            div.className = 'review-item';
+            
+            div.innerHTML = `
+                <strong>Question ${item.qNum}:</strong> ${item.question}<br><br>
+                <span style="color: #c62828;"><strong>Your Answer:</strong> ${item.userAnswer}</span><br>
+                <span style="color: #2e7d32;"><strong>Correct Answer:</strong> ${item.correctAnswer}</span>
+                <div class="explanation">
+                    <strong>Explanation:</strong> ${item.explanation}
+                </div>
+            `;
+            reviewArea.appendChild(div);
+        });
+    }
+</script>
+</body>
+</html>
